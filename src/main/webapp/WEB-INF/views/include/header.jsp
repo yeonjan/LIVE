@@ -13,7 +13,7 @@
         <li><a class="nav-link scrollto active" href="${root}?action=goHome">Home</a></li>
         <li><a class="nav-link scrollto" href="${root}?action=goAptInfo">아파트 매매 정보</a></li>
         <li><a class="nav-link scrollto" href="${root}?action=goIntro">소개</a></li>
-        <li><a class="nav-link scrollto" href="${root}/boards">공지사항</a></li>
+        <li><a class="nav-link scrollto" href="${root}/boards?pgno=1&key=&word=">공지사항</a></li>
         <li class="dropdown">
           <a href="#" class="getstarted scrollto"><span>Log In</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
