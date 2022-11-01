@@ -1,5 +1,8 @@
 package com.ssafy.live.model.dto;
 
+import java.util.List;
+
+
 import lombok.Data;
 
 @Data
@@ -12,4 +15,5 @@ public class Board {
     private int hit;
     private String registerTime;
     private String bullet;
+    private List<FileInfo> fileInfos;
 }

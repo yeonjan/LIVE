@@ -6,7 +6,9 @@ import lombok.Data;
 public class FileInfo {
 
 	private String saveFolder;
-	private String originalFile;
-	private String saveFile;
+	private String originalFileName;
+	private String saveFileName;
+	
 
 }
+ 
