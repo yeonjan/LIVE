@@ -18,9 +18,9 @@
           <a href="#" class="getstarted scrollto"><span>Log In</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
           	<c:choose>
-	          	<c:when test="${empty sessionScope.userId}">
-		            <li><a href="${root}?action=goLogin">로그인</a></li>
-		            <li><a href="${root}?action=goRegist">회원가입</a></li>
+	          	<c:when test="${empty sessionScope.userInfo}">
+		            <li><a href="${root}/users/login">로그인</a></li>
+		            <li><a href="${root}/users/join">회원가입</a></li>
 		            <li><a href="${root}?action=goFindId">ID PWD 찾기</a></li>
 		        </c:when>
 	            <c:otherwise>
