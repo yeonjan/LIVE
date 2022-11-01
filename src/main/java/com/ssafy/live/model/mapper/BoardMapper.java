@@ -10,9 +10,9 @@ import com.ssafy.live.model.dto.Board;
 
 @Mapper
 public interface BoardMapper {
-	int insert(Board board) throws SQLException;
-
-//	void registerFile(Board board) throws Exception;
+	
+	int insertArticle(Board board) throws SQLException;
+	void registerFile(Board board) throws Exception;
 	List<Board> selectAll(Map<String, Object> map) throws SQLException;
 	int getTotalArticleCount(Map<String, Object> map) throws SQLException;
 //	Board getArticle(int articleNo) throws SQLException;

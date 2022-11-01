@@ -35,8 +35,8 @@
 			</if>
 		</if>
 	</sql>
-	
-	<insert id="insert" parameterType="board">
+
+	<insert id="insertArticle" parameterType="board">
 		insert into board (user_id, subject, content, hit, register_time)
 		values (#{userId}, #{subject}, #{content}, 0, now())
 		<!-- insert 후 pk값 얻어오기 -->
@@ -58,13 +58,13 @@
 	</select>
 
 	<insert id="registerFile" parameterType="board">
-		insert into file_info (article_no, save_folder, original_file,
-		save_file)
+		insert into fileinfo (article_no, save_folder,
+		original_file,save_file)
 		values
 		<foreach collection="fileInfos" item="fileinfo"
 			separator=" , ">
 			(#{articleNo}, #{fileinfo.saveFolder},
-			#{fileinfo.originalFile}, #{fileinfo.saveFile})
+			#{fileinfo.originalFileName}, #{fileinfo.saveFileName})
 		</foreach>
 	</insert>
 

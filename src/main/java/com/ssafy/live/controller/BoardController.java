@@ -1,12 +1,15 @@
 package com.ssafy.live.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -42,9 +45,6 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@Autowired
-	private ServletContext servletContext;
-
-	@Autowired
 	public BoardController(BoardService boardService) {
 		log.info("BoardController 생성자 호출!!!");
 		this.boardService = boardService;
@@ -55,7 +55,7 @@ public class BoardController {
 	public ResponseEntity<?> getList(@RequestParam Map<String, String> map) throws Exception {
 		log.debug("list parameter : {}", map);
 
-		List<Board> list = boardService.getArticle(map);
+		List<Board> list = boardService.getArticleList(map);
 		for (Board b : list) {
 			log.debug(b.toString());
 		}
@@ -72,48 +72,26 @@ public class BoardController {
 
 	}
 
-//	@PostMapping("/write")
-//	public String write(@Value("{$file.path.upload-files}") String filePath, Board board,
-//			@RequestParam("upfile") MultipartFile[] files, HttpSession session, RedirectAttributes redirectAttributes)
-//			throws Exception {
-//		log.debug("write boardDto : {}", board);
-//		User memberDto = (User) session.getAttribute("userinfo");
-//		board.setUserId(memberDto.getUserId());
-//
-////		FileUpload 관련 설정.
-//		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
-//		if (!files[0].isEmpty()) {
-//			String realPath = servletContext.getRealPath("/upload");
-////			String realPath = servletContext.getRealPath("/resources/img");
-//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-//			String saveFolder = filePath + File.separator + today;
-//			log.debug("저장 폴더 : {}", saveFolder);
-//			File folder = new File(saveFolder);
-//			if (!folder.exists())
-//				folder.mkdirs();
-//			List<FileInfo> fileInfos = new ArrayList<FileInfo>();
-//			for (MultipartFile mfile : files) {
-//				FileInfo fileInfoDto = new FileInfo();
-//				String originalFileName = mfile.getOriginalFilename();
-//				if (!originalFileName.isEmpty()) {
-//					String saveFileName = System.nanoTime()
-////							UUID.randomUUID().toString()
-//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-//					fileInfoDto.setSaveFolder(today);
-//					fileInfoDto.setOriginalFile(originalFileName);
-//					fileInfoDto.setSaveFile(saveFileName);
-//					log.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-//					mfile.transferTo(new File(folder, saveFileName));
-//				}
-//				fileInfos.add(fileInfoDto);
-//			}
-//			board.setFileInfos(fileInfos);
-//		}
-//		boardService.writeArticle(board);
-//		redirectAttributes.addAttribute("pgno", "1");
-//		redirectAttributes.addAttribute("key", "");
-//		redirectAttributes.addAttribute("word", "");
-//		return "redirect:/board/list";
-//	}
+	// 글 쓰기
+	@PostMapping("")
+	public ResponseEntity<Void> write(MultipartFile[] files, Board board, HttpSession session)
+			throws Exception {
+		log.debug(board.toString());
+
+		// 세션 확인하면 주석 바꾸기
+//		User loginUser = (User) session.getAttribute("userInfo"); 
+		User loginUser = new User();
+		loginUser.setUserId("yjin99");
+
+		board.setUserId(loginUser.getUserId());
+
+		// 파일 정보
+		List<FileInfo> fileInfos = boardService.saveFileInfo(files);
+		board.setFileInfos(fileInfos);
+		boardService.writeArticle(board);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+
+	}
+
 
 }

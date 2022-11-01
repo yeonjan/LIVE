@@ -1,23 +1,37 @@
 package com.ssafy.live.model.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.live.model.dto.Board;
+import com.ssafy.live.model.dto.FileInfo;
 import com.ssafy.live.model.mapper.BoardMapper;
 import com.ssafy.live.util.PageNavigation;
 import com.ssafy.live.util.SizeConstant;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper boardMapper;
+	@Autowired
+	private ServletContext servletContext;
 
 	@Autowired
 	public BoardServiceImpl(BoardMapper boardMapper) {
@@ -26,13 +40,18 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void writeArticle(Board board) throws Exception {
-		// TODO Auto-generated method stub
+		boardMapper.insertArticle(board);
+		System.out.println("글입력 후 dto : " + board);
+		List<FileInfo> fileInfos = board.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			boardMapper.registerFile(board);
+		}
 
 	}
 
 	// 공지사항 목록 조회
 	@Override
-	public List<Board> getArticle(Map<String, String> map) throws Exception {
+	public List<Board> getArticleList(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = map.get("key");
 		if ("userid".equals(key))
@@ -92,22 +111,56 @@ public class BoardServiceImpl implements BoardService {
 		param.put("key", key == null ? "" : key);
 		param.put("word", word == null ? "" : map.get("word"));
 
-		//전체 게시글 수
+		// 전체 게시글 수
 		int totalCount = boardMapper.getTotalArticleCount(param);
 		pageNavigation.setTotalArticleCount(totalCount);
-		
-		//전체 페이지 수
+
+		// 전체 페이지 수
 		int totalPageCount = (totalCount - 1) / sizePerPage + 1;
 		pageNavigation.setTotalPageCount(totalPageCount);
-		
-		//이전, 다음 버튼 활성화 여부
+
+		// 이전, 다음 버튼 활성화 여부
 		boolean existNextPage = currentPage <= naviSize;
 		pageNavigation.setExistNextPage(existNextPage);
 		boolean existPrevPage = (totalPageCount - 1) / naviSize * naviSize < currentPage;
 		pageNavigation.setExistPrevPage(existPrevPage);
-		
+
 		pageNavigation.makeNavigator();
 		return pageNavigation;
+	}
+
+	@Override
+	public List<FileInfo> saveFileInfo(MultipartFile[] files) throws IllegalStateException, IOException {
+		// 파일 정보
+		List<FileInfo> fileInfos = new ArrayList<FileInfo>();
+		for (MultipartFile file : files) {
+			// 파일 이름
+			String originalFileName = file.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String saveFileName = File.separator + uuid + "_" + originalFileName;
+
+			// 파일 저장 경로
+			String realPath = servletContext.getRealPath("/resources/img");
+			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+			
+			String savePath = realPath + File.separator + today;
+			log.debug(savePath);
+			
+			File folder = new File(savePath);
+			if (!folder.exists())
+				folder.mkdirs();
+
+			// 파일 저장 
+			file.transferTo(new File(savePath + saveFileName));
+
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setSaveFolder(today);
+			fileInfo.setOriginalFileName(originalFileName);
+			fileInfo.setSaveFileName(saveFileName);
+			fileInfos.add(fileInfo);
+
+		}
+		return fileInfos;
 	}
 
 }
