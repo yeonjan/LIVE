@@ -1,33 +1,22 @@
 package com.ssafy.live.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.live.model.dto.Board;
 import com.ssafy.live.model.dto.FileInfo;
@@ -52,7 +41,7 @@ public class BoardController {
 
 	// 글 목록 조회
 	@GetMapping("")
-	public ResponseEntity<?> getList(@RequestParam Map<String, String> map) throws Exception {
+	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
 		log.debug("list parameter : {}", map);
 
 		List<Board> list = boardService.getArticleList(map);
@@ -74,8 +63,7 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(MultipartFile[] files, Board board, HttpSession session)
-			throws Exception {
+	public ResponseEntity<Void> write(MultipartFile[] files, Board board, HttpSession session) throws Exception {
 		log.debug(board.toString());
 
 		// 세션 확인하면 주석 바꾸기
@@ -86,12 +74,40 @@ public class BoardController {
 		board.setUserId(loginUser.getUserId());
 
 		// 파일 정보
-		List<FileInfo> fileInfos = boardService.saveFileInfo(files);
+		List<FileInfo> fileInfos = boardService.saveFileInServer(files);
 		board.setFileInfos(fileInfos);
 		boardService.writeArticle(board);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 
 	}
 
+	// 게시글 상세 조회
+	@GetMapping("/{articleNo}")
+	public ResponseEntity<Board> detail(@PathVariable int articleNo) throws Exception {
+		boardService.updateHit(articleNo);
+		Board board = boardService.getArticle(articleNo);
+
+		return new ResponseEntity<Board>(board, HttpStatus.OK);
+	}
+
+	// 게시글 삭제
+	@DeleteMapping("/{articleNo}")
+	public ResponseEntity<Void> delete(@PathVariable int articleNo) throws Exception {
+		boardService.deleteFileInServer(articleNo);
+		boardService.deleteArticle(articleNo);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+
+	}
+
+	// 게시글 수정
+	@PutMapping("/{articleNo}")
+	public ResponseEntity<?> modify(@PathVariable int articleNo, Board board) throws Exception {
+		board.setArticleNo(articleNo);
+		
+		boardService.modifyArticle(board);
+
+		return null;
+
+	}
 
 }
