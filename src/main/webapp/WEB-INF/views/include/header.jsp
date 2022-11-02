@@ -23,9 +23,13 @@
 		            <li><a href="${root}/users/join">회원가입</a></li>
 		            <li><a href="${root}?action=goFindId">ID PWD 찾기</a></li>
 		        </c:when>
+		        <c:when test="${sessionScope.userInfo.manager eq 'T'}">
+		            <li><a href="${root}/users/logout">로그아웃</a></li>
+		            <li><a href="${root}/user?action=confirm"></a></li>
+		        </c:when>
 	            <c:otherwise>
-		            <li><a href="${root}/user?action=logout">로그아웃</a></li>
-		            <li><a href="${root}/user?action=confirm">회원정보 확인</a></li>
+		            <li><a href="${root}/users/logout">로그아웃</a></li>
+		            <li><a href="${root}/users/confirm">회원정보 확인</a></li>
 		            <li><a href="${root}/interest?action=list">관심지역 조회</a></li>
 		        </c:otherwise>
             </c:choose>
