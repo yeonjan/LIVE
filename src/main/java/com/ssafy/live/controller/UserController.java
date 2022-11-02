@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,8 +34,27 @@ public class UserController {
 	
 	@Autowired
 	public UserController(UserService memberService) {
-		log.info("MemberController 생성자 호출!!!");
+		log.info("UserController 생성자 호출!!!");
 		this.userService = memberService;
+	}
+	
+	// 회원 정보 수정
+	@PutMapping("/{userid}")
+	public ResponseEntity<?> update(@RequestBody User updateUser) throws Exception {
+		log.debug(" 회원 정보 수정 호출 성공 ");
+		log.debug("updateUser : {}", updateUser);
+		userService.updateUser(updateUser);
+		return new ResponseEntity<Void> (HttpStatus.OK);
+	}
+	
+	// 회원 정보 조회
+	@GetMapping("/{userid}")
+	public ResponseEntity<?> get(HttpSession session) throws Exception {
+		log.debug(" 회원 정보 조회 호출 성공 ");
+		User user = (User) session.getAttribute("userInfo");
+		log.debug(" userId : {}", user.getUserId());
+		user = userService.getUser(user.getUserId());
+		return new ResponseEntity<User> (user ,HttpStatus.OK);
 	}
 	
 	@GetMapping("/id/{userid}")
@@ -80,12 +100,6 @@ public class UserController {
 			String msg = "아이디 또는 비밀번호 확인 후 다시 로그인하세요!";
 			return new ResponseEntity<String> (msg , HttpStatus.NO_CONTENT);
 		}
-	}
-	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "success";
 	}
 	
 	@GetMapping("/list")
