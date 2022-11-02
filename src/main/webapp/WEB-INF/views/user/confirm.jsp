@@ -6,8 +6,8 @@
 
 <%@ include file="../include/head.jsp"%>
 <script>
+let userid = "${userInfo.userId}";
 window.onload = function () {   
-	let userid = "${userInfo.userId}";
 	fetch("${root}/users/" + userid)
 	 	.then((response) => response.json()) 
 		.then((data) => {
@@ -19,9 +19,23 @@ window.onload = function () {
 	});
 }    
 
-function update() {
+function updateUser() {
 	location.href = "${root}/users/update";
 }
+
+function deleteUser() {
+	 fetch("${root}/users/"+ userid, {
+		 method: "DELETE",
+	 }).then((response) => {
+	 	  console.log(response);
+	 	  if(response.status == "200") {
+	 		  alert("회원탈퇴에 성공하셨습니다.");	 	
+	 		  location.href = "${root}/users/logout";
+	 	  } else {
+	 		  alert("회원탈퇴에 실패 하셨습니다.");
+	 	  }
+	});
+};
 
 </script>
 
@@ -65,10 +79,10 @@ function update() {
 											<strong>가입일</strong> <label for="id-verification"
 												id="profile-joinDate" class="profile-item"></label>
 										</div>																		
-									<button type="button" onclick="update()" class="btn btn-secondary"
+									<button type="button" onclick="updateUser()" class="btn btn-secondary"
 										id="btn-move-update" style="margin-right: 10px">
 										회원정보 수정</button>
-									<button type="button" class="btn btn-secondary"
+									<button type="button" onclick="deleteUser()" class="btn btn-secondary"
 										id="btn-delete">회원탈퇴</button>
 									</form>
 								</div>
