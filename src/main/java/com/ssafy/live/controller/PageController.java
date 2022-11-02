@@ -5,7 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class PageController {
 
 	// 회원가입 페이지 이동
@@ -23,8 +26,9 @@ public class PageController {
 	// 로그아웃 기능
 	@GetMapping("/users/logout")
 	public String logout(HttpSession session) {
+		log.debug("로그아웃 페이지 호출 성공!!!!!!!!!");
 		session.invalidate();
-		return "main";
+		return "redirect:/";
 	}
 
 	// 회원 정보 확인 페이지 이동
@@ -38,15 +42,10 @@ public class PageController {
 	public String update() {
 		return "user/update";
 	}
-
-	@GetMapping("/go/boards")
-	public String goList() {
-		return "board/list";
-	}
-	
-	@GetMapping("/go/boards/write")
-	public String goBoardWrile() {
-		return "board/write";
+	// 아파트 매매 정보 페이지 이동
+	@GetMapping("/apts")
+	public String aptInfo() {
+		return "aptInfo";
 	}
 
 //	@ExceptionHandler

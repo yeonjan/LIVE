@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +34,19 @@ public class UserController {
 	private final UserService userService;
 	
 	@Autowired
-	public UserController(UserService memberService) {
+	public UserController(UserService userService) {
 		log.info("UserController 생성자 호출!!!");
-		this.userService = memberService;
+		this.userService = userService;
+	}
+	
+	// 회원 정보 삭제
+	@DeleteMapping("/{userid}")
+	public ResponseEntity<?> delete(HttpSession session) throws Exception {
+		log.debug(" 회원 정보 삭제 호출 성공 ");
+		User user = (User) session.getAttribute("userInfo");
+		userService.deleteUser(user.getUserId());
+		
+		return new ResponseEntity<Void> (HttpStatus.OK);
 	}
 	
 	// 회원 정보 수정

@@ -11,7 +11,7 @@
     <nav id="navbar" class="navbar">
       <ul>
         <li><a class="nav-link scrollto active" href="${root}?action=goHome">Home</a></li>
-        <li><a class="nav-link scrollto" href="${root}?action=goAptInfo">아파트 매매 정보</a></li>
+        <li><a class="nav-link scrollto" href="${root}/apts">아파트 매매 정보</a></li>
         <li><a class="nav-link scrollto" href="${root}?action=goIntro">소개</a></li>
         <li><a class="nav-link scrollto" href="${root}/go/boards">공지사항</a></li>
         <li class="dropdown">
