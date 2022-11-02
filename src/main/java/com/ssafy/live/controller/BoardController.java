@@ -53,9 +53,9 @@ public class BoardController {
 		Map<String, Object> responeMap = new HashMap<String, Object>();
 		responeMap.put("articles", list);
 		responeMap.put("navigation", pageNavigation);
-		// responeMap.put("pgno", map.get("pgno"));
-		// responeMap.put("key", map.get("key"));
-		// responeMap.put("word", map.get("word"));
+		responeMap.put("pgno", map.get("pgno"));
+		responeMap.put("key", map.get("key"));
+		responeMap.put("word", map.get("word"));
 
 		return new ResponseEntity<Map<String, Object>>(responeMap, HttpStatus.OK);
 
@@ -103,10 +103,9 @@ public class BoardController {
 	@PutMapping("/{articleNo}")
 	public ResponseEntity<?> modify(@PathVariable int articleNo, Board board) throws Exception {
 		board.setArticleNo(articleNo);
-		
 		boardService.modifyArticle(board);
 
-		return null;
+		return new ResponseEntity<Void>(HttpStatus.OK);
 
 	}
 
