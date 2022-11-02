@@ -43,15 +43,15 @@ public class PageController {
 		return "user/update";
 	}
 
-
 	@GetMapping("/go/boards")
 	public String goList() {
 		return "board/list";
 	}
-	
+
 	@GetMapping("/go/boards/write")
 	public String goBoardWrile() {
 		return "board/write";
+	}
 
 	// 아파트 매매 정보 페이지 이동
 	@GetMapping("/apts")

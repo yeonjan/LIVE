@@ -66,10 +66,7 @@ public class BoardController {
 	public ResponseEntity<Void> write(MultipartFile[] files, Board board, HttpSession session) throws Exception {
 		log.debug(board.toString());
 
-		// 세션 확인하면 주석 바꾸기
-//		User loginUser = (User) session.getAttribute("userInfo"); 
-		User loginUser = new User();
-		loginUser.setUserId("yjin99");
+		User loginUser = (User) session.getAttribute("userInfo"); 
 
 		board.setUserId(loginUser.getUserId());
 

@@ -48,7 +48,7 @@
 
 	<select id="selectAll" parameterType="map" resultMap="article">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit,
-		b.register_time, u.user_name
+		b.register_time, b.bullet, u.user_name
 		from board b, users u
 		where b.user_id =
 		u.user_id

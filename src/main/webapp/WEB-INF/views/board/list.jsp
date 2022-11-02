@@ -41,6 +41,7 @@
 					<thead>
 						<tr class="text-center">
 							<th scope="col">글번호</th>
+							<th scope="col">글머리</th>
 							<th scope="col">제목</th>
 							<th scope="col">작성자</th>
 							<th scope="col">조회수</th>
@@ -99,11 +100,23 @@
 				});
 			
 				let tbody = "";
-
-
-				for(article of articles){
+	
+				for(let i = 0; i < articles.length; i++) {
 					tbody+=`<tr class="text-center" >
-									<th scope="row">${"${article.articleNo}"}</th>
+						<th>${"${(pgno-1)*10+(i+1)}"}</th>
+						<td>${"${articles[i].bullet}"}</td>
+						<td class="text-start"><a href="#"
+							class="article-title link-dark" data-no="${'${articles[i].articleNo}'}"
+							style="text-decoration: none"> ${"${articles[i].subject}"} </a></td>
+						<td>${"${articles[i].userName+'('+articles[i].userId+')'}"}</td>
+						<td>${"${articles[i].hit}"}</td>
+						<td>${"${articles[i].registerTime}"}</td>
+					</tr>`
+				}
+				/* for(article of articles){
+					tbody+=`<tr class="text-center" >
+									<th>${"${article.articleNo}"}</th>
+									<td>${"${article.bullet}"}</td>
 									<td class="text-start"><a href="#"
 										class="article-title link-dark" data-no="${'${article.articleNo}'}"
 										style="text-decoration: none"> ${"${article.subject}"} </a></td>
@@ -112,7 +125,7 @@
 									<td>${"${article.registerTime}"}</td>
 								</tr>`
 				}
-
+ */
 				document.getElementsByClassName("article-list")[0].innerHTML = tbody;
 				
 			}
