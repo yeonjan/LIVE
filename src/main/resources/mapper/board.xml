@@ -21,8 +21,8 @@
 
 	<resultMap type="fileInfo" id="file">
 		<result column="save_folder" property="saveFolder" />
-		<result column="original_file" property="originalFile" />
-		<result column="save_file" property="saveFile" />
+		<result column="original_file" property="originalFileName" />
+		<result column="save_file" property="saveFileName" />
 	</resultMap>
 
 	<sql id="search">
@@ -93,7 +93,7 @@
 	<select id="fileInfoList" resultMap="file">
 		select save_folder,
 		original_file, save_file
-		from file_info
+		from fileinfo
 		where article_no = #{articleNo}
 	</select>
 
@@ -112,7 +112,7 @@
 	</update>
 
 	<delete id="deleteFile" parameterType="int">
-		delete from file_info
+		delete from fileinfo
 		where article_no = #{articleNo}
 	</delete>
 
