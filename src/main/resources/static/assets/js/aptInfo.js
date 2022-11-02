@@ -3,6 +3,7 @@
  */
 // /////////////////////// select box 설정 (지역, 매매기간)
 // /////////////////////////
+let root = "http://localhost:8080"
 let date = new Date();
 
 window.onload = function () {
@@ -51,20 +52,16 @@ document.querySelector("#gugun").addEventListener("change", function () {
   }
 });
 
-function sendRequest(selid, regcode, action) {
- 
-      const url = "/live/dongcode";
-      let params = "regcode=" + regcode 
-      			   + "&action=" + action;
-      console.log(selid + " " + regcode + " " + action + " " + `${url}?${params}`);
-      fetch(`${url}?${params}`)
-        .then((response) => response.json())
-        .then((data) => addOption(selid, data));
-    }
+function sendRequest(selid, regcode, action) {	
+    fetch(`${root}/dongcodes/${action}?regcode=${regcode}`)
+	  .then((response) => response.json())
+      .then((data) => addOption(selid, data));
+}
 
 function addOption(selid, data) {
   let opt = ``;
   initOption(selid);
+  console.log(data);
   switch (selid) {
     case "sido":
       opt += `<option value="">시도선택</option>`;
@@ -117,7 +114,6 @@ document.querySelector("#list-btn").addEventListener("click", function () {
     .then((data) => {
         makeList(data);
         registMarker(data);
-
     });
 
 });

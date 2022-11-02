@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in"
 					data-aos-delay="200">
-					<img src="assets/img/main-house.png" class="img-fluid animated"
+					<img src="/assets/img/main-house.png" class="img-fluid animated"
 						alt="" />
 				</div>
 			</div>
@@ -38,34 +38,34 @@
 			<div class="row" data-aos="zoom-in">
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/xia.png" class="img-fluid" alt="" />
+					<img src="/assets/img/brandLogo/xia.png" class="img-fluid" alt="" />
 				</div>
 
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/hillstate.png" class="img-fluid"
+					<img src="/assets/img/brandLogo/hillstate.png" class="img-fluid"
 						alt="" />
 				</div>
 
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/acro.png" class="img-fluid" alt="" />
+					<img src="/assets/img/brandLogo/acro.png" class="img-fluid" alt="" />
 				</div>
 
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/e편한세상.png" class="img-fluid" alt="" />
+					<img src="/assets/img/brandLogo/e편한세상.png" class="img-fluid" alt="" />
 				</div>
 
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/lottecastle.png" class="img-fluid"
+					<img src="/assets/img/brandLogo/lottecastle.png" class="img-fluid"
 						alt="" />
 				</div>
 
 				<div
 					class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-					<img src="assets/img/brandLogo/prugio.png" class="img-fluid" alt="" />
+					<img src="/assets/img/brandLogo/prugio.png" class="img-fluid" alt="" />
 				</div>
 			</div>
 		</div>
