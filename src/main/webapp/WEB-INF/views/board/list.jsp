@@ -12,11 +12,7 @@
 		<%@ include file="../include/header.jsp"%>
 
 		<div class="row justify-content-center">
-			<div class="col-lg-10 col-md-10 col-sm-12">
-				<h2 class="my-3 py-3 shadow-sm bg-light text-center">
-					<mark class="sky">글목록</mark>
-				</h2>
-			</div>
+			<div class="mt-5 mb-5"></div>
 			<div class="col-lg-10 col-md-10 col-sm-12">
 				<div class="row align-self-center mb-2">
 					<div class="col-md-2 text-start">
@@ -52,22 +48,10 @@
 						</tr>
 					</thead>
 					<tbody class ="article-list">
-
-							<c:forEach var="article" items="${articles}">
-								<tr class="text-center" >
-									<th scope="row">${article.articleNo}</th>
-									<td class="text-start"><a href="#"
-										class="article-title link-dark" data-no="${article.articleNo}"
-										style="text-decoration: none"> ${article.subject} </a></td>
-									<td>${article.userName}</td>
-									<td>${article.hit}</td>
-									<td>${article.registerTime}</td>
-								</tr>
-							</c:forEach>
 					</tbody>
 				</table>
 			</div>
-			<div class="m-3 row" id = "navigator">${navigation.navigator}</div>
+			<div class="m-3 row" id = "navigator"></div>
 		</div>
 		</div>
 		<form id="form-param" method="get" action="">
@@ -123,7 +107,7 @@
 									<td class="text-start"><a href="#"
 										class="article-title link-dark" data-no="${'${article.articleNo}'}"
 										style="text-decoration: none"> ${"${article.subject}"} </a></td>
-									<td>${"${article.userName}"}</td>
+									<td>${"${article.userName+'('+article.userId+')'}"}</td>
 									<td>${"${article.hit}"}</td>
 									<td>${"${article.registerTime}"}</td>
 								</tr>`
@@ -135,9 +119,6 @@
 			
 
 
-		
-
-			
 			let titles = document.querySelectorAll(".article-title");
 			titles.forEach(function(title) {
 				title.addEventListener("click", function() {
@@ -150,17 +131,15 @@
 			//글쓰기 버튼
 			document.querySelector("#btn-mv-register").addEventListener(
 					"click", function() {
-						let form = document.querySelector("#form-param");
-						form.setAttribute("action", "${root}/board/write");
-						form.submit();
+						window.location=`http://localhost:8080/go/boards/write`;
 					});
 
 			//검색 버튼
 			document.querySelector("#btn-search").addEventListener("click",
-					function() {
-						let form = document.querySelector("#form-search");
-						form.setAttribute("action", "${root}/boards");
-						form.submit();
+					function() { 
+						console.log(key, word);
+						getBoards();
+						
 					});
 
 			
