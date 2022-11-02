@@ -43,6 +43,11 @@ public class PageController {
 	public String goList() {
 		return "board/list";
 	}
+	
+	@GetMapping("/go/boards/write")
+	public String goBoardWrile() {
+		return "board/write";
+	}
 
 //	@ExceptionHandler
 
