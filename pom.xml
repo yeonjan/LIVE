@@ -68,8 +68,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
-			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 		
 		<!-- swagger를 위한 의존성 추가 -->

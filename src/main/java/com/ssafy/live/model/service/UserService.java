@@ -14,7 +14,9 @@ public interface UserService {
 	
 	/* 관리자 서비스 */
 	List<User> listUser(Map<String, Object> map) throws Exception;
-	User getUser(String userId) throws Exception;
 	void updateUser(User user) throws Exception;
 	void deleteUser(String userid) throws Exception;	
+	
+	/* 공통 서비스 */
+	User getUser(String userId) throws Exception;
 }

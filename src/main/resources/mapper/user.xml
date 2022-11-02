@@ -28,7 +28,7 @@
 	</insert>
 
 	<select id="loginUser" parameterType="map" resultMap="user">
-		select user_id, user_name
+		select user_id, user_name, user_password, email_id, email_domain, join_date
 		from users
 		where user_id = #{userId} and user_password = #{userPwd}
 	</select>
@@ -48,6 +48,7 @@
 	<update id="updateUser" parameterType="user">
 		update users
 		<trim prefix="set" suffixOverrides=",">
+			<if test="userName != null">user_name = #{userName},</if>
 			<if test="userPwd != null">user_password = #{userPwd},</if>
 			<if test="emailId != null">email_id = #{emailId},</if>
 			<if test="emailDomain != null">email_domain = #{emailDomain},</if>
