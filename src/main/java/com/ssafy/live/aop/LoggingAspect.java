@@ -21,7 +21,7 @@ public class LoggingAspect {
 
 	private Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-//수정 필요 	@Before(value = "execution(* com.ssafy.live.model..Board*.*(..))")
+	@Before(value = "execution(* com.ssafy.live.model.service.*.*(..))")
 	public void loggin(JoinPoint joinPoint) {
 		logger.debug("before call method : {} ", joinPoint.getSignature());
 		logger.debug("메서드 선언부 : {} 전달 파라미터 : {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
@@ -32,33 +32,35 @@ public class LoggingAspect {
 		logger.debug("around call method : {} ", joinPoint.getSignature());
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		
+
 		Object proceed = joinPoint.proceed();
-		
+
 		stopWatch.stop();
-		
+
 		logger.debug("summary : {}", stopWatch.shortSummary());
 		logger.debug("totalTime : {}", stopWatch.getTotalTimeMillis());
 		logger.debug("pretty : {}", stopWatch.prettyPrint());
-		
+
 		return proceed;
 	}
 
-	//수정 필요 	@AfterReturning(value = "execution(* com.ssafy.board.model..Board*.list*(..))", returning = "obj")
+	// 수정 필요 @AfterReturning(value = "execution(*
+	// com.ssafy.board.model..Board*.list*(..))", returning = "obj")
 	public void afterReturningMethod(JoinPoint joinPoint, Object obj) {
 		logger.debug("afterReturning call method : {} ", joinPoint.getSignature());
 		logger.debug("return value : {}", obj);
 	}
 
-	//수정 필요 	@AfterThrowing(value = "execution(* com.ssafy.board.model..Board*.list*(..))", throwing = "exception")
+	// 수정 필요 @AfterThrowing(value = "execution(*
+	// com.ssafy.board.model..Board*.list*(..))", throwing = "exception")
 	public void afterThrowingMethod(JoinPoint joinPoint, Exception exception) {
 		logger.debug("afterThrowing call method : {}", joinPoint.getSignature());
 		logger.debug("exception : {}", exception);
 	}
 
-	//수정 필요 @After(value = "execution(* com.ssafy.board.model..Board*.list*(..))")
+	// 수정 필요 @After(value = "execution(* com.ssafy.board.model..Board*.list*(..))")
 	public void afterMethod(JoinPoint joinPoint) {
 		logger.debug("after call method : {}", joinPoint.getSignature());
 	}
-	
+
 }

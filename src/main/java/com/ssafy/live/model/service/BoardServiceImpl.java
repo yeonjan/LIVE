@@ -14,7 +14,6 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.live.model.dto.Board;
@@ -49,7 +48,7 @@ public class BoardServiceImpl implements BoardService {
 
 	}
 
-	// 공지사항 목록 조회
+	//게시글 목록 조회
 	@Override
 	public List<Board> getArticleList(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -66,30 +65,34 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectAll(param);
 	}
 
+	//게시글 조회
 	@Override
 	public Board getArticle(int articleNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("boardService");
+		return boardMapper.getArticle(articleNo);
 	}
 
 	@Override
 	public void updateHit(int articleNo) throws Exception {
-		// TODO Auto-generated method stub
+		boardMapper.updateHit(articleNo);
 
 	}
 
 	@Override
-	public void modifyArticle(Board boardDto) throws Exception {
-		// TODO Auto-generated method stub
+	public void modifyArticle(Board board) throws Exception {
+		boardMapper.modifyArticle(board);
 
 	}
 
+	//게시글 삭제
 	@Override
-	public void deleteArticle(int articleNo, String path) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteArticle(int articleNo) throws Exception {
+		boardMapper.deleteFile(articleNo);
+		boardMapper.deleteArticle(articleNo);
 
 	}
 
+	//페이지 네비게이션 생성
 	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
@@ -129,8 +132,9 @@ public class BoardServiceImpl implements BoardService {
 		return pageNavigation;
 	}
 
+	//서버에 파일 저장
 	@Override
-	public List<FileInfo> saveFileInfo(MultipartFile[] files) throws IllegalStateException, IOException {
+	public List<FileInfo> saveFileInServer(MultipartFile[] files) throws IllegalStateException, IOException {
 		// 파일 정보
 		List<FileInfo> fileInfos = new ArrayList<FileInfo>();
 		for (MultipartFile file : files) {
@@ -142,15 +146,15 @@ public class BoardServiceImpl implements BoardService {
 			// 파일 저장 경로
 			String realPath = servletContext.getRealPath("/resources/img");
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-			
+
 			String savePath = realPath + File.separator + today;
 			log.debug(savePath);
-			
+
 			File folder = new File(savePath);
 			if (!folder.exists())
 				folder.mkdirs();
 
-			// 파일 저장 
+			// 파일 저장
 			file.transferTo(new File(savePath + saveFileName));
 
 			FileInfo fileInfo = new FileInfo();
@@ -161,6 +165,26 @@ public class BoardServiceImpl implements BoardService {
 
 		}
 		return fileInfos;
+	}
+
+	//서버에서 파일 삭제
+	@Override
+	public void deleteFileInServer(int articleNo) throws Exception {
+
+		String realPath = servletContext.getRealPath("/resources/img");
+
+		List<FileInfo> fileInfos = boardMapper.fileInfoList(articleNo);
+		for (FileInfo fileInfo : fileInfos) {
+			String saveFolder = fileInfo.getSaveFolder();
+			String savePath = realPath + File.separator + saveFolder;
+			String saveFileName = fileInfo.getSaveFileName();
+
+			log.debug(savePath);
+			log.debug(saveFileName);
+			File targetFile = new File(savePath, saveFileName);
+			targetFile.delete();
+
+		}
 	}
 
 }
