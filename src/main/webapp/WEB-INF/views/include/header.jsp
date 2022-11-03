@@ -30,7 +30,7 @@
 	            <c:otherwise>
 		            <li><a href="${root}/users/logout">로그아웃</a></li>
 		            <li><a href="${root}/users/confirm">회원정보 확인</a></li>
-		            <li><a href="${root}/interest?action=list">관심지역 조회</a></li>
+		            <li><a href="${root}/interests">관심지역 조회</a></li>
 		        </c:otherwise>
             </c:choose>
           </ul>

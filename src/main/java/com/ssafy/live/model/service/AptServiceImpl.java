@@ -27,17 +27,21 @@ public class AptServiceImpl implements AptService {
 	}
 
 	@Override
-	public void registerInterest(String no, String id) throws SQLException {
-		aptMapper.registerInterest(no, id);
+	public void registerInterest(String userId, String aptCode) throws SQLException {
+		log.debug("관심 매물 등록 서비스");
+		aptMapper.registerInterest(userId, aptCode);
 	}
 
 	@Override
-	public List<Interest> viewInterest(String id) throws SQLException {
-		return null;
+	public List<Interest> viewInterest(String userId) throws SQLException {
+		log.debug("관심 매물 조회 서비스");
+		return aptMapper.viewInterest(userId);
 	}
 
 	@Override
-	public void deleteInterest(Long aptNo) throws SQLException {
+	public void deleteInterest(String aptCode) throws SQLException {
+		log.debug("관심 매물 삭제 서비스");
+		aptMapper.deleteInterest(aptCode);
 	}
 
 }

@@ -58,6 +58,12 @@ public class PageController {
 	public String aptInfo() {
 		return "aptInfo";
 	}
+	
+	// 관심 매물 페이지 이동
+	@GetMapping("/interests")
+	public String interestInfo() {
+		return "user/interestArea";
+	}
 
 //	@ExceptionHandler
 
