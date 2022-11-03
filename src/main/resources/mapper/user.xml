@@ -16,7 +16,7 @@
 		<result column="join_date" property="joinDate"/>
 	</resultMap>
 
-	<select id="idCheck" parameterType="String" resultType="int">
+	<select id="idCheck" parameterType="string" resultType="int">
 		select count(user_id)
 		from users
 		where user_id = #{userid}

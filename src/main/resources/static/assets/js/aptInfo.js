@@ -92,29 +92,31 @@ function initOption(selid) {
 
 // /////////////////////// 아파트 매매 정보 /////////////////////////
 document.querySelector("#list-btn").addEventListener("click", function () {
-    console.log("button click");
-  let url = "/live/apt";
-
   let dongSel = document.querySelector("#dong");
-  let regCode = dongSel[dongSel.selectedIndex].value;
-  console.log(regCode);
+  let regCodeInfo = dongSel[dongSel.selectedIndex].value;
   let yearSel = document.querySelector("#year");
-  let year = yearSel[yearSel.selectedIndex].value;
+  let yearInfo = yearSel[yearSel.selectedIndex].value;
   let monthSel = document.querySelector("#month");
-  let month = monthSel[monthSel.selectedIndex].value;
-  let dealYM = year + month;
-  let queryParams = 
-      "regcode=" + regCode 
-      + "&year=" + year
-      + "&month=" + month
-      + "&action=apt"; 
- 
-  fetch(`${url}?${queryParams}`)
+  let monthInfo = monthSel[monthSel.selectedIndex].value;
+
+  let aptInfo = {      	          
+	  regcode: regCodeInfo,
+	  year: yearInfo,
+	  month: monthInfo,
+  };
+  let config = {
+	  method: "POST",
+	  headers: {
+	    "Content-Type": "application/json",
+	  },
+  	  body: JSON.stringify(aptInfo),
+  };
+  fetch(`${root}/apts`, config)
     .then((response) => response.json())
     .then((data) => {
         makeList(data);
         registMarker(data);
-    });
+   });
 
 });
 
@@ -168,22 +170,29 @@ function makeList(data) {
     
     let interestTd = document.createElement("td");
     let interestImg = document.createElement("img");
-	interestImg.setAttribute("src", "/live/assets/img/icon/star_off.png");
+	interestImg.setAttribute("src", "/assets/img/icon/star_off.png");
 	interestTd.appendChild(interestImg);
 	tr.appendChild(interestTd);
 	
 	interestImg.addEventListener("click", function() {
-		const url = "/live/interest";
-	    let params = "no=" + regcode.no
-	    			 + "&action=register";
-
-		fetch(`${url}?${params}`)
+//		const url = "/live/interest";
+//	    let params = "no=" + regcode.no
+//	    			 + "&action=register";
+	    let config = {
+	    		  method: "POST",
+	    		  headers: {
+	    		    "Content-Type": "application/json",
+	    		  },
+	    	  	  body: JSON.stringify({no: regcode.no}),
+	    };
+	    
+		fetch(`${root}/apts/interest`)
 	    .then((response) => response.json())
 	    .then((data) => {
 	        console.log("성공");
 	    });
 		
-		interestImg.setAttribute("src", "/live/assets/img/icon/star_on.png");
+		interestImg.setAttribute("src", "/assets/img/icon/star_on.png");
 	});
 	
 	let nameTd = document.createElement("td");
