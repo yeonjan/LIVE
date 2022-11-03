@@ -22,6 +22,7 @@ public class DongCodeServiceImpl implements DongCodeService {
 		this.dongCodeMapper = dongCodeMapper;
 	}
 	
+	@Override
 	public List<DongCode> sido() throws SQLException {
 		return dongCodeMapper.sido();
 	}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.live.model.mapper.AptMapper">
+
+	<select id="listApt" parameterType="map" resultType="apt">
+		select info.apartmentName, deal.floor, deal.area, info.dong, deal.dealAmount, info.lng, info.lat, deal.no, deal.dealYear, deal.dealMonth 
+		from houseinfo info
+		join housedeal deal
+		on info.aptCode = deal.aptCode
+		where info.dongCode = #{regcode} and deal.dealYear= #{year} and deal.dealMonth = #{month}
+	</select>
+	
+	<insert id="registerInterest" parameterType="string">
+		insert into interestarea (user_id, aptcode) values (?,?)
+	</insert>
+	
+</mapper>
