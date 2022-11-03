@@ -114,6 +114,7 @@ document.querySelector("#list-btn").addEventListener("click", function () {
   fetch(`${root}/apts`, config)
     .then((response) => response.json())
     .then((data) => {
+    	console.log(data);
         makeList(data);
         registMarker(data);
    });
@@ -175,18 +176,15 @@ function makeList(data) {
 	tr.appendChild(interestTd);
 	
 	interestImg.addEventListener("click", function() {
-//		const url = "/live/interest";
-//	    let params = "no=" + regcode.no
-//	    			 + "&action=register";
 	    let config = {
-	    		  method: "POST",
-	    		  headers: {
-	    		    "Content-Type": "application/json",
-	    		  },
-	    	  	  body: JSON.stringify({no: regcode.no}),
+		  method: "POST",
+		  headers: {
+		    "Content-Type": "application/json",
+		  },
+	  	  body: JSON.stringify({aptCode: regcode.no}),
 	    };
 	    
-		fetch(`${root}/apts/interest`)
+		fetch(`${root}/apts/interest`, config)
 	    .then((response) => response.json())
 	    .then((data) => {
 	        console.log("성공");

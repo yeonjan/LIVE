@@ -11,12 +11,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.live.model.dto.Apt;
+import com.ssafy.live.model.dto.Interest;
 import com.ssafy.live.model.dto.User;
 import com.ssafy.live.model.service.AptService;
 
@@ -47,13 +50,33 @@ public class AptController {
 	}
 
 	@PostMapping("/interest")
-	public ResponseEntity<?> registerInterest(@RequestBody String no, HttpSession session) throws SQLException {
-		log.debug(" 호출 !!!!!");
+	public ResponseEntity<?> registerInterest(@RequestBody Map<String, String> map, HttpSession session) throws SQLException {
+		log.debug("interest 등록 호출 !!!!!");
+		String aptCode = map.get("aptCode");
 		User user = (User) session.getAttribute("userInfo");
-		aptService.registerInterest(no, user.getUserId());
-		Map<String, List<Apt>> data = new HashMap<>();
+		aptService.registerInterest(user.getUserId(), aptCode);
 		return new ResponseEntity<Void> (HttpStatus.OK);
 	}
+	
+	@GetMapping("/interest")
+	public ResponseEntity<?> viewInterest(HttpSession session) throws SQLException {
+		log.debug("viewInterest 호출 !!!!!");
+		User user = (User) session.getAttribute("userInfo");
+		List<Interest> lists = new ArrayList<Interest>();
+		lists = aptService.viewInterest(user.getUserId());
+		Map<String, List<Interest>> data = new HashMap<>();
+		data.put("regcodes", lists);
+		return new ResponseEntity<Map<String, List<Interest>>> (data, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/interest")
+	public ResponseEntity<?> deleteInterest(@RequestBody Map<String, String> map) throws SQLException {
+		log.debug("deleteInterest 호출 !!!!!");
+		String aptCode = map.get("aptCode");
+		aptService.deleteInterest(aptCode);
+		return new ResponseEntity<Void> (HttpStatus.OK);
+	}
+	
 	
 }
  

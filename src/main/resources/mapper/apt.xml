@@ -4,6 +4,15 @@
 
 <mapper namespace="com.ssafy.live.model.mapper.AptMapper">
 
+	<resultMap type="interest" id="interest">
+		<result column="apt_name" property="name"/>
+		<result column="apt_floor" property="floor"/>
+		<result column="apt_area" property="area"/>
+		<result column="apt_dong" property="dong"/>
+		<result column="apt_amount" property="amount"/>
+		<result column="noo" property="no"/>
+	</resultMap>
+
 	<select id="listApt" parameterType="map" resultType="apt">
 		select info.apartmentName, deal.floor, deal.area, info.dong, deal.dealAmount, info.lng, info.lat, deal.no, deal.dealYear, deal.dealMonth 
 		from houseinfo info
@@ -13,7 +22,24 @@
 	</select>
 	
 	<insert id="registerInterest" parameterType="string">
-		insert into interestarea (user_id, aptcode) values (?,?)
+		insert into interestarea (user_id, aptCode)
+		values (#{userId}, #{aptCode})
 	</insert>
+	
+	<select id="viewInterest" parameterType="string" resultMap="interest">
+		select apt_name, apt_floor, apt_area, apt_dong, apt_amount, noo 
+		from (	select info.apartmentName apt_name, deal.floor apt_floor, deal.area apt_area, info.dong apt_dong, deal.dealAmount apt_amount, info.lng apt_lng, info.lat apt_lat, deal.no noo 
+				from houseinfo info 
+				join housedeal deal 
+				on info.aptCode = deal.aptCode) tmp 
+		where noo in (select aptCode from interestarea where user_id = #{userId})
+	</select>
+	
+	<delete id="deleteInterest" parameterType="string">
+		delete from interestarea 
+		where aptCode = #{aptCode}
+	</delete>
+	
+	
 	
 </mapper>
