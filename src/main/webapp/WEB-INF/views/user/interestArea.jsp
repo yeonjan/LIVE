@@ -24,39 +24,23 @@
 				<td>${"${list.dong}"}</td>
 				<td>${"${list.amount}"}</td>
 				<td style="display: none">${"${list.no}"}</td>
-				<td class="text-center btn-delete-interest">
+				<td class="text-center btn-delete-interest" onclick="deleteInterest(${"${list.no}"})">
 					<img alt="#" src="/assets/img/icon/delete.png">
 				</td>
 			</tr>`
 		}
 
-		document.getElementById("interest-tbody").innerHTML = tbody;
-
-		let deleteBtn = document.querySelectorAll(".btn-delete-interest"); 
-		[].forEach.call(deleteBtn, function(deleteBtn){ 
-			deleteBtn.addEventListener("click", function() {
-				let config = {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({aptCode: list.no}),
-				};
-				
-				fetch(`${root}/apts/interest`, config)
-				.then((response) => {
-					console.log(response);
-					if(response.status == "200") {
-						console.log("삭제 성공");
-						location.href = `${root}/apts/interest`;
-					} else {
-						console.log("삭제 실패");
-					}
-				})
-			}); 
-		});
-
+		document.getElementById("interest-tbody").innerHTML = tbody;	
 	};
+	
+	function deleteInterest(aptCode) {
+		fetch(`${root}/apts/interest/`+ aptCode, {
+			method: "DELETE",
+		})
+		.then((response) => {
+			location.href = `${root}/interests`;
+		});
+	}
 
 </script>
 

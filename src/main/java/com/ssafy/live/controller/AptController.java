@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,12 +70,12 @@ public class AptController {
 		return new ResponseEntity<Map<String, List<Interest>>> (data, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/interest")
-	public ResponseEntity<?> deleteInterest(@RequestBody Map<String, String> map) throws SQLException {
+	@DeleteMapping("/interest/{aptCode}")
+	public String deleteInterest(@PathVariable("aptCode") String aptCode) throws SQLException {
 		log.debug("deleteInterest 호출 !!!!!");
-		String aptCode = map.get("aptCode");
+		log.debug(aptCode);
 		aptService.deleteInterest(aptCode);
-		return new ResponseEntity<Void> (HttpStatus.OK);
+		return "관심매물 삭제 성공";
 	}
 	
 	
