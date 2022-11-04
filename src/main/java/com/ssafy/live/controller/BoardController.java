@@ -24,6 +24,7 @@ import com.ssafy.live.model.dto.User;
 import com.ssafy.live.model.service.BoardService;
 import com.ssafy.live.util.PageNavigation;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -63,16 +64,19 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(MultipartFile[] files, Board board, HttpSession session) throws Exception {
-		log.debug(board.toString());
-
+	public ResponseEntity<Void> write(@RequestBody MultipartFile[] files, @RequestBody Board board, HttpSession session) throws Exception {
 		User loginUser = (User) session.getAttribute("userInfo"); 
-
 		board.setUserId(loginUser.getUserId());
 
+		log.debug("글 입력 전 dto : {}", board.toString());
+		
 		// 파일 정보
-		List<FileInfo> fileInfos = boardService.saveFileInServer(files);
-		board.setFileInfos(fileInfos);
+		if (!files[0].isEmpty()) {
+			List<FileInfo> fileInfos = boardService.saveFileInServer(files);
+			log.debug(board.toString());
+			board.setFileInfos(fileInfos);
+		}
+		
 		boardService.writeArticle(board);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 

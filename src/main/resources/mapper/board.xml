@@ -12,6 +12,7 @@
 		<result column="content" property="content" />
 		<result column="hit" property="hit" />
 		<result column="register_time" property="registerTime" />
+		<result column="bullet" property="bullet"/>
 	</resultMap>
 
 	<resultMap type="board" id="viewArticle" extends="article">
@@ -37,8 +38,8 @@
 	</sql>
 
 	<insert id="insertArticle" parameterType="board">
-		insert into board (user_id, subject, content, hit, register_time)
-		values (#{userId}, #{subject}, #{content}, 0, now())
+		insert into board (user_id, subject, content, hit, register_time, bullet)
+		values (#{userId}, #{subject}, #{content}, 0, now(),#{bullet})
 		<!-- insert 후 pk값 얻어오기 -->
 		<selectKey resultType="int" keyProperty="articleNo"
 			order="AFTER">
