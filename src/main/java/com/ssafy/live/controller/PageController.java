@@ -3,7 +3,9 @@ package com.ssafy.live.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,14 +45,23 @@ public class PageController {
 		return "user/update";
 	}
 
+	//게시판 목록 페이지 이동 
 	@GetMapping("/go/boards")
 	public String goList() {
 		return "board/list";
 	}
 
+	//게시판 글쓰기 페이지 이동 
 	@GetMapping("/go/boards/write")
 	public String goBoardWrile() {
 		return "board/write";
+	}
+	
+	//게시판 상세조회 페이지 이동 
+	@GetMapping("/go/boards/view/{articleNo}")
+	public String goBoardView(@PathVariable String articleNo, Model model) {
+		model.addAttribute("articleNo",articleNo);
+		return "board/view";
 	}
 
 	// 아파트 매매 정보 페이지 이동
