@@ -70,6 +70,7 @@
 							let form = document.querySelector("#form-register")
 							const boardInfo = new FormData(form);
 
+
 							let config = {
 								method: "POST",
 								body: boardInfo,
