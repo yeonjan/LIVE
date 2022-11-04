@@ -57,14 +57,9 @@
 							</div>
 						</div>
 					</div>
-					<form id="form-param" method="get" action="">
-						<input type="hidden" id="act" name="action" value="">
-					</form>
-					<form id="form-no-param" method="get" action="${root}/board">
-						<input type="hidden" id="nact" name="action" value=""> <input type="hidden" id="articleno"
-							name="articleno" value="${requestScope.detail.articleNo}">
-					</form>
+
 					<script>
+						//PthVariable 어떻게 받아오는데,,,,,,
 						let url = window.location.href.split('/');
 						let size = url.length;
 						let articelNo = url[size - 1];
@@ -92,29 +87,26 @@
 
 							});
 
+						//게시글 수정 페이지 이동
 						document.querySelector("#btn-mv-modify").addEventListener("click",
 							function () {
 								console.log("수정버튼 누름");
-								let form = document.querySelector("#form-no-param");
-								document.querySelector("#nact").value = "view_modify";
-								form.setAttribute("action", "${root}/board");
-								form.submit();
+								window.location = `http://localhost:8080/boards/modify/` + articelNo;
 							});
 
-						document
-							.querySelector("#btn-delete")
-							.addEventListener(
-								"click",
-								function () {
-									if (confirm("정말 삭제하시겠습니까?")) {
-										fetch('http://localhost:8080/boards/' + articelNo, { method: "DELETE" })
-											.then(response => {
-												if (response.status == 200) {
-													window.location = `http://localhost:8080/go/boards`;
-												}
-											});
-									}
-								});
+						//게시글 삭제
+						document.querySelector("#btn-delete").addEventListener(
+							"click",
+							function () {
+								if (confirm("정말 삭제하시겠습니까?")) {
+									fetch('http://localhost:8080/boards/' + articelNo, { method: "DELETE" })
+										.then(response => {
+											if (response.status == 200) {
+												window.location = `http://localhost:8080/go/boards`;
+											}
+										});
+								}
+							});
 					</script>
 				</main>
 				<%@ include file="../include/footer.jsp" %>

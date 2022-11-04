@@ -45,23 +45,32 @@ public class PageController {
 		return "user/update";
 	}
 
-	//게시판 목록 페이지 이동 
+	// 게시판 페이지 이동
 	@GetMapping("/go/boards")
-	public String goList() {
+	public String goBoardList() {
 		return "board/list";
 	}
 
-	//게시판 글쓰기 페이지 이동 
+	// 게시글 쓰기 페이지 이동
 	@GetMapping("/go/boards/write")
-	public String goBoardWrile() {
+	public String writeBoard() {
 		return "board/write";
 	}
-	
-	//게시판 상세조회 페이지 이동 
+
+	// 게시글 상세조회 페이지 이동
 	@GetMapping("/boards/view/{articleNo}")
-	public String goBoardView(@PathVariable String articleNo, Model model) {
-		model.addAttribute("articleNo",articleNo);
+	public String viewBoard(@PathVariable String articleNo, Model model) {
+		model.addAttribute("articleNo", articleNo);
 		return "board/view";
+	}
+
+	// 게시글 수정 페이지 이동
+	@GetMapping("/boards/modify/{articleNo}")
+	public String modifyBoard(@PathVariable String articleNo, Model model) {
+		log.debug("pageController : modify ");
+		model.addAttribute("articleNo", articleNo);
+		return "board/modify";
+
 	}
 
 	// 아파트 매매 정보 페이지 이동
@@ -69,7 +78,7 @@ public class PageController {
 	public String aptInfo() {
 		return "aptInfo";
 	}
-	
+
 	// 관심 매물 페이지 이동
 	@GetMapping("/interests")
 	public String interestInfo() {
