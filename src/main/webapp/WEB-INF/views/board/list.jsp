@@ -127,7 +127,7 @@
 			trs.forEach(tr => {
 				tr.addEventListener("click", () => {
 					let articleNo = tr.firstElementChild.innerHTML;
-					window.location=`http://localhost:8080/go/boards/view/`+articleNo;
+					window.location=`http://localhost:8080/boards/view/`+articleNo;
 				})
 			})
 

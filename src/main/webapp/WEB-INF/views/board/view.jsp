@@ -24,15 +24,12 @@
 					</section>
 
 					<div class="row justify-content-center">
-						<div class="col-lg-8 col-md-10 col-sm-12">
-							<h2 class="my-3 py-3 shadow-sm bg-light text-center">
-								<mark class="sky">글보기</mark>
-							</h2>
+						<div class="col-lg-8 col-md-10 col-sm-12 mt-2">
+
 						</div>
 						<div class="col-lg-8 col-md-10 col-sm-12">
 							<div class="row my-2">
-								<h2 class="text-secondary px-5">${requestScope.detail.articleNo}.
-									${requestScope.detail.subject}</h2>
+								<h2 class="subject text-secondary px-5">1</h2>
 							</div>
 							<div class="row">
 								<div class="col-md-8">
@@ -40,25 +37,22 @@
 										<img class="avatar me-2 float-md-start bg-light p-2"
 											src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
 										<p>
-											<span class="fw-bold">${requestScope.detail.userId}</span> <br />
-											<span class="text-secondary fw-light">
-												${requestScope.detail.registerTime} 조회 :
-												${requestScope.detail.hit +1}</span>
+											<span class="userId fw-bold"></span> <br />
+											<span class="hit text-secondary fw-light"></span>
 										</p>
 									</div>
 								</div>
 								<div class="divider mb-3"></div>
-								<div class="text-secondary">${requestScope.detail.content}</div>
+								<div class="content text-secondary"></div>
 								<div class="divider mt-3 mb-3"></div>
 								<div class="d-flex justify-content-end">
 									<button type="button" id="btn-list"
 										class="btn btn-outline-primary mb-3">글목록</button>
-									<c:if test="${detail.userId eq userId}">
-										<button type="button" id="btn-mv-modify"
-											class="btn btn-outline-success mb-3 ms-1">글수정</button>
-										<button type="button" id="btn-delete"
-											class="btn btn-outline-danger mb-3 ms-1">글삭제</button>
-									</c:if>
+									<button type="button" id="btn-mv-modify"
+										class="btn btn-outline-success mb-3 ms-1">글수정</button>
+									<button type="button" id="btn-delete"
+										class="btn btn-outline-danger mb-3 ms-1">글삭제</button>
+
 								</div>
 							</div>
 						</div>
@@ -71,12 +65,30 @@
 							name="articleno" value="${requestScope.detail.articleNo}">
 					</form>
 					<script>
+						let url = window.location.href.split('/');
+						let size = url.length;
+						let articelNo = url[size - 1];
+
+						async function getBoardDeatils() {
+							let result = await fetch(`http://localhost:8080/boards/` + articelNo);
+							let data = await result.json();
+							console.log(data);
+
+							document.querySelector(".subject").innerHTML = data.subject;
+							document.querySelector(".userId").innerHTML = data.userName + "(" + data.userId + ")";
+							document.querySelector(".hit").innerHTML = data.registerTime + "  조회 : " + data.hit;
+							document.querySelector(".content").innerHTML = data.content;
+
+
+
+						}
+
+						getBoardDeatils();
+
+						//글 목록으로 이동
 						document.querySelector("#btn-list").addEventListener("click",
 							function () {
-								let form = document.querySelector("#form-param");
-								document.querySelector("#act").value = "list";
-								form.setAttribute("action", "${root}/board");
-								form.submit();
+								window.location = `http://localhost:8080/go/boards`;
 
 							});
 
@@ -95,13 +107,12 @@
 								"click",
 								function () {
 									if (confirm("정말 삭제하시겠습니까?")) {
-										let form = document
-											.querySelector("#form-no-param");
-										document.querySelector("#nact").value = "delete"; // 이렇게 하면 BoardController에서 action=delete일 때로 넘어간다.
-										form
-											.setAttribute("action",
-												"${root}/board");
-										form.submit();
+										fetch('http://localhost:8080/boards/' + articelNo, { method: "DELETE" })
+											.then(response => {
+												if (response.status == 200) {
+													window.location = `http://localhost:8080/go/boards`;
+												}
+											});
 									}
 								});
 					</script>

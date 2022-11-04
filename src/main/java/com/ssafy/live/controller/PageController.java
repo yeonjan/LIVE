@@ -58,7 +58,7 @@ public class PageController {
 	}
 	
 	//게시판 상세조회 페이지 이동 
-	@GetMapping("/go/boards/view/{articleNo}")
+	@GetMapping("/boards/view/{articleNo}")
 	public String goBoardView(@PathVariable String articleNo, Model model) {
 		model.addAttribute("articleNo",articleNo);
 		return "board/view";
