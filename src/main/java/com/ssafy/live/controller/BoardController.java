@@ -68,7 +68,7 @@ public class BoardController {
 		User loginUser = (User) session.getAttribute("userInfo"); 
 		board.setUserId(loginUser.getUserId());
 
-		log.debug("글 입력 전 dto : {}", board.toString());
+		//log.debug("글 입력 전 dto : {}", board.toString());
 		
 		// 파일 정보
 		if (!files[0].isEmpty()) {
@@ -102,7 +102,8 @@ public class BoardController {
 
 	// 게시글 수정
 	@PutMapping("/{articleNo}")
-	public ResponseEntity<?> modify(@PathVariable int articleNo, Board board) throws Exception {
+	public ResponseEntity<?> modify(@PathVariable int articleNo,@RequestBody Board board) throws Exception {
+		log.debug("수정 board dto : {}", board.toString());
 		board.setArticleNo(articleNo);
 		boardService.modifyArticle(board);
 
