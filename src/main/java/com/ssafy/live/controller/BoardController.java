@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,6 @@ import com.ssafy.live.model.dto.User;
 import com.ssafy.live.model.service.BoardService;
 import com.ssafy.live.util.PageNavigation;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -64,19 +64,20 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(@RequestBody MultipartFile[] files, @RequestBody Board board, HttpSession session) throws Exception {
-		User loginUser = (User) session.getAttribute("userInfo"); 
+	public ResponseEntity<Void> write(@RequestBody MultipartFile[] files, @RequestBody Board board, HttpSession session)
+			throws Exception {
+		User loginUser = (User) session.getAttribute("userInfo");
 		board.setUserId(loginUser.getUserId());
 
-		//log.debug("글 입력 전 dto : {}", board.toString());
-		
+		// log.debug("글 입력 전 dto : {}", board.toString());
+
 		// 파일 정보
 		if (!files[0].isEmpty()) {
 			List<FileInfo> fileInfos = boardService.saveFileInServer(files);
 			log.debug(board.toString());
 			board.setFileInfos(fileInfos);
 		}
-		
+
 		boardService.writeArticle(board);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -102,7 +103,7 @@ public class BoardController {
 
 	// 게시글 수정
 	@PutMapping("/{articleNo}")
-	public ResponseEntity<?> modify(@PathVariable int articleNo,@RequestBody Board board) throws Exception {
+	public ResponseEntity<Void> modify(@PathVariable int articleNo, @RequestBody Board board) throws Exception {
 		log.debug("수정 board dto : {}", board.toString());
 		board.setArticleNo(articleNo);
 		boardService.modifyArticle(board);
