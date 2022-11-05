@@ -33,10 +33,10 @@
 							<br>
 
 							<div class="form-group mb-3">
-								<label for="comment">Content:</label>
+								<label for="content">Content:</label>
 								<textarea class="form-control" rows="5" id="content" name="content" value=""></textarea>
 							</div>
-							<button type="submit" class="btn-modify btn btn-secondary"
+							<button type="button" id="btn-modify" class="btn btn-secondary"
 								style="float: right;">수정하기</button>
 						</form>
 						<br>
@@ -58,9 +58,8 @@
 
 						getBoardDeatils();
 
-						document.querySelector(".btn-modify").addEventListener("click", (el) => {
-							el.preventDefault();
-
+						document.querySelector("#btn-modify").addEventListener("click", () => {
+							console.log(subject);
 							let boardInfo = {
 								subject: document.getElementById("subject").value,
 								content: document.getElementById("content").value,
@@ -74,11 +73,14 @@
 								body: JSON.stringify(boardInfo),
 							};
 
-							fetch('http://localhost:8080/boards/'+ articelNo, config)
+							fetch('http://localhost:8080/boards/' + 16, config)
 								.then(response => {
-									console.log(response.data)
-									if (response.status == 200) {
-										//window.location = `http://localhost:8080/go/boards`;
+									console.log(response)
+									if (response.status == "200") {
+										alert("게시글 수정에 성공하셨습니다.");
+										window.location = `http://localhost:8080/go/boards`;
+									} else {
+										alert("게시글 수정에 실패 하셨습니다.")
 									}
 								});
 
