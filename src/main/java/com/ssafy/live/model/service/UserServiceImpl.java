@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(String userId) throws Exception {
 		userMapper.deleteUser(userId);		
 	}
+
+	@Override
+	public String searchPwd(User user) throws Exception {
+		return userMapper.searchPwd(user);
+	}
 }

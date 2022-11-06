@@ -11,6 +11,7 @@ public interface UserService {
 	int idCheck(String userId) throws Exception;
 	void joinUser(User user) throws Exception;
 	User loginUser(Map<String, String> map) throws Exception;
+	String searchPwd(User user) throws Exception;
 	
 	/* 관리자 서비스 */
 	List<User> listUser(Map<String, Object> map) throws Exception;

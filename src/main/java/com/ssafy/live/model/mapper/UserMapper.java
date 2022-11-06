@@ -15,6 +15,7 @@ public interface UserMapper {
 	int idCheck(String userId) throws SQLException;
 	void joinUser(User user) throws SQLException;
 	User loginUser(Map<String, String> map) throws SQLException;
+	String searchPwd(User user) throws SQLException;
 	
 	/* 관리자 */
 	List<User> listUser(Map<String, Object> map) throws SQLException;

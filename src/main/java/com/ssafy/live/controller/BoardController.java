@@ -59,7 +59,6 @@ public class BoardController {
 		responeMap.put("word", map.get("word"));
 
 		return new ResponseEntity<Map<String, Object>>(responeMap, HttpStatus.OK);
-
 	}
 
 	// 글 쓰기
@@ -98,7 +97,6 @@ public class BoardController {
 		boardService.deleteFileInServer(articleNo);
 		boardService.deleteArticle(articleNo);
 		return new ResponseEntity<Void>(HttpStatus.OK);
-
 	}
 
 	// 게시글 수정
@@ -109,7 +107,6 @@ public class BoardController {
 		boardService.modifyArticle(board);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
-
 	}
 
 }
