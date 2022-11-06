@@ -63,7 +63,7 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(@RequestBody MultipartFile[] files, @RequestBody Board board, HttpSession session)
+	public ResponseEntity<Void> write(@RequestParam MultipartFile[] files, Board board, HttpSession session)
 			throws Exception {
 		User loginUser = (User) session.getAttribute("userInfo");
 		board.setUserId(loginUser.getUserId());
