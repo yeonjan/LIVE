@@ -96,7 +96,7 @@
 							"click",
 							function () {
 								if (confirm("정말 삭제하시겠습니까?")) {
-									fetch('http://localhost:8080/boards/' + articelNo, { method: "DELETE" })
+									fetch('http://localhost:8080/boards/' + articleNo, { method: "DELETE" })
 										.then(response => {
 											if (response.status == 200) {
 												window.location = `http://localhost:8080/go/boards`;
