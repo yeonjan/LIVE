@@ -138,9 +138,6 @@
    	        		  alert("회원 가입에 실패 하셨습니다.")
    	        	  }
    	      	});
-       /*    let form = document.querySelector("#form-join");
-          form.setAttribute("action", "${root}/user/join");
-          form.submit();  */
         }
       });
     </script>

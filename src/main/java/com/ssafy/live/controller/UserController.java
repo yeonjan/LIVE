@@ -39,6 +39,16 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	// 회원 비밀번호 찾기
+	@PostMapping("/pwd")
+	public ResponseEntity<?> delete(@RequestBody User userInfo) throws Exception {
+		log.debug(" 회원 비밀번호 찾기 호출 성공 ");
+		log.debug(userInfo.toString());
+		String pwd = userService.searchPwd(userInfo);
+		log.debug(pwd);
+		return new ResponseEntity<String> (pwd, HttpStatus.OK);
+	}
+	
 	// 회원 정보 삭제
 	@DeleteMapping("/{userid}")
 	public ResponseEntity<?> delete(HttpSession session) throws Exception {

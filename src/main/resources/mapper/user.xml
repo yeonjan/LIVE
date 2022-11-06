@@ -15,6 +15,12 @@
 		<result column="email_domain" property="emailDomain"/>
 		<result column="join_date" property="joinDate"/>
 	</resultMap>
+	
+	<select id="searchPwd" parameterType="user" resultType="string">
+		select user_password
+		from users
+		where user_id = #{userId} and user_name = #{userName} and email_id = #{emailId} and email_domain = #{emailDomain}
+	</select>
 
 	<select id="idCheck" parameterType="string" resultType="int">
 		select count(user_id)
