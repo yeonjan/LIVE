@@ -24,8 +24,8 @@
 		            <li><a href="${root}?action=goFindId">ID PWD 찾기</a></li>
 		        </c:when>
 		        <c:when test="${sessionScope.userInfo.manager eq 'T'}">
-		            <li><a href="${root}/users/logout">로그아웃</a></li>
-		            <li><a href="${root}/user?action=confirm"></a></li>
+		        	<li><a href="${root}/users/logout">로그아웃</a></li>
+		            <li><a href="${root}/admins">공지사항 관리</a></li>
 		        </c:when>
 	            <c:otherwise>
 		            <li><a href="${root}/users/logout">로그아웃</a></li>

@@ -84,6 +84,13 @@ public class PageController {
 	public String interestInfo() {
 		return "user/interestArea";
 	}
+	
+	// 관리자 공지사항 페이지 이동
+	@GetMapping("/admins")
+	public String adminPage() {
+		return "admin/notice";
+	}
+
 
 //	@ExceptionHandler
 

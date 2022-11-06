@@ -189,4 +189,20 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Override
+	public List<Board> getNoticeList(Map<String, String> map) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		String key = map.get("key");
+		if ("userid".equals(key))
+			key = "b.user_id";
+		param.put("key", key == null ? "" : key);
+		param.put("word", map.get("word") == null ? "" : map.get("word"));
+		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		param.put("start", start);
+		param.put("listsize", SizeConstant.LIST_SIZE);
+
+		return boardMapper.noticeSelectAll(param);
+	}
+
 }

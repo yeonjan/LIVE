@@ -22,5 +22,5 @@ public interface BoardMapper {
 	void deleteFile(int articleNo) throws Exception;
 	void deleteArticle(int articleNo) throws SQLException;
 	List<FileInfo> fileInfoList(int articleNo) throws Exception;
-
+	List<Board> noticeSelectAll(Map<String, Object> map) throws SQLException;
 }
