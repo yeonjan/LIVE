@@ -59,13 +59,10 @@
 					</div>
 
 					<script>
-						//PthVariable 어떻게 받아오는데,,,,,,
-						let url = window.location.href.split('/');
-						let size = url.length;
-						let articelNo = url[size - 1];
+						let articleNo= "${articleNo}";
 
 						async function getBoardDeatils() {
-							let result = await fetch(`http://localhost:8080/boards/` + articelNo);
+							let result = await fetch(`http://localhost:8080/boards/` + articleNo);
 							let data = await result.json();
 							console.log(data);
 
@@ -91,7 +88,7 @@
 						document.querySelector("#btn-mv-modify").addEventListener("click",
 							function () {
 								console.log("수정버튼 누름");
-								window.location = `http://localhost:8080/boards/modify/` + articelNo;
+								window.location = `http://localhost:8080/boards/modify/` + articleNo;
 							});
 
 						//게시글 삭제

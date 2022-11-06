@@ -42,14 +42,12 @@
 						<br>
 					</div>
 					<script>
-						//PthVariable 어떻게 받아오는데,,,,,,
-						let url = window.location.href.split('/');
-						let size = url.length;
-						let articelNo = url[size - 1];
+						
+						let articleNo= "${articleNo}";
 						let hit;
 
 						async function getBoardDeatils() {
-							let result = await fetch(`http://localhost:8080/boards/` + articelNo);
+							let result = await fetch(`http://localhost:8080/boards/` + articleNo);
 							let data = await result.json();
 							console.log(data);
 
@@ -60,6 +58,7 @@
 
 						getBoardDeatils();
 
+						
 						document.querySelector("#btn-modify").addEventListener("click", () => {
 							console.log(hit);
 							let boardInfo = {
