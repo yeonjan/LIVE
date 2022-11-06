@@ -75,7 +75,7 @@
 								body: JSON.stringify(boardInfo),
 							};
 
-							fetch('http://localhost:8080/boards/' + 16, config)
+							fetch('http://localhost:8080/boards/' + articleNo, config)
 								.then(response => {
 									console.log(response)
 									if (response.status == "200") {
