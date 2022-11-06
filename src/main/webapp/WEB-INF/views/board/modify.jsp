@@ -46,6 +46,7 @@
 						let url = window.location.href.split('/');
 						let size = url.length;
 						let articelNo = url[size - 1];
+						let hit;
 
 						async function getBoardDeatils() {
 							let result = await fetch(`http://localhost:8080/boards/` + articelNo);
@@ -54,15 +55,17 @@
 
 							document.getElementById("subject").value = data.subject;
 							document.getElementById("content").value = data.content;
+							hit = data.hit-1;
 						}
 
 						getBoardDeatils();
 
 						document.querySelector("#btn-modify").addEventListener("click", () => {
-							console.log(subject);
+							console.log(hit);
 							let boardInfo = {
 								subject: document.getElementById("subject").value,
 								content: document.getElementById("content").value,
+								hit:hit
 							};
 							console.log(boardInfo);
 							let config = {

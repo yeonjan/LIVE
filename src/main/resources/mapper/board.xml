@@ -108,7 +108,7 @@
 	<update id="modifyArticle" parameterType="board">
 		update board
 		set subject
-		= #{subject}, content = #{content}
+		= #{subject}, content = #{content},hit=#{hit}
 		where article_no = #{articleNo}
 	</update>
 
