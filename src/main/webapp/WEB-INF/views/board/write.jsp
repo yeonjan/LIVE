@@ -20,11 +20,15 @@
 							<input type="hidden" name="word" value="">
 							<select style="display: inline; width: auto;" name="bullet"
 								class="form-select form-select-sm" aria-label=".form-select-sm example">
-								<option selected>글머리</option>
-								<option value="일반">일반</option>
-								<option value="공지">공지사항</option>
-								<!-- <c:if test="${sessionScope.manager eq 'T'}"> -->
-								<!-- </c:if> -->
+								<option selected>글머리</option>	
+								<c:choose>						
+									<c:when test="${sessionScope.userInfo.manager eq 'T'}">
+										<option value="공지">공지사항</option>
+									</c:when>
+									<c:otherwise>
+										<option value="일반">일반</option>
+									</c:otherwise>
+								</c:choose>
 							</select>
 							<div class="mb-3">
 								<label for="subject" class="form-label">제목 : </label> <input type="text"
@@ -54,9 +58,6 @@
 						value="${key}"> <input type="hidden" id="word" name="word" value="${word}">
 				</form>
 				<script>
-
-
-
 
 					document.querySelector("#btn-register").addEventListener("click", function () {
 						if (!document.querySelector("#subject").value) {

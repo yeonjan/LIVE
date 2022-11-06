@@ -28,5 +28,7 @@ public interface BoardService {
 	List<FileInfo> saveFileInServer(MultipartFile[] files) throws Exception;
 
 	void deleteFileInServer(int articleNo) throws Exception;
-
+	// 관리자 기능
+	// 공지사항 리스트 가져오기
+	List<Board> getNoticeList(Map<String, String> map) throws Exception;
 }

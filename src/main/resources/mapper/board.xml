@@ -57,6 +57,13 @@
 		order by b.bullet is NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
+	
+	<select id="noticeSelectAll" parameterType="map" resultMap="article">
+		select b.article_no, b.user_id, b.subject, b.content, b.hit,
+		b.register_time, b.bullet, u.user_name
+		from board b, users u
+		where b.bullet = '공지'
+	</select>
 
 	<insert id="registerFile" parameterType="board">
 		insert into fileinfo (article_no, save_folder,
