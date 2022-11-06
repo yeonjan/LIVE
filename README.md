@@ -55,19 +55,19 @@
 
 ![스크린샷 2022-11-06 오후 6 17 29](https://user-images.githubusercontent.com/60567697/200163490-b0fdbde6-e614-491d-9b93-acc0654273e1.png)
 
-### 공지사항 및 게시글 검색
+### 게시글 검색
 
 ![스크린샷 2022-11-06 오후 6 13 59](https://user-images.githubusercontent.com/60567697/200163494-6ba4cceb-9b6b-4a77-aa65-bc190eaddd25.png)
 
 
-### 글 작성
+### 게시글 작성
 ![스크린샷 2022-11-06 오후 6 16 34](https://user-images.githubusercontent.com/60567697/200163493-34698c29-e35a-44f8-9761-e02682c99740.png)
 
 
-### 공지사항 상세 조회
+### 게시글 상세 조회
 ![스크린샷 2022-11-06 오후 6 15 05](https://user-images.githubusercontent.com/60567697/200163517-bc0abec5-e708-404e-bb5c-88155479b37a.png)
 
 
-### 글 수정
+### 게시글 수정
 ![스크린샷 2022-11-06 오후 6 15 18](https://user-images.githubusercontent.com/60567697/200163520-5e305b40-3009-4ccf-927f-36c9a95d8f5b.png)
 
