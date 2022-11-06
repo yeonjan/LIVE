@@ -54,7 +54,7 @@
 		where b.user_id =
 		u.user_id
 		<include refid="search"></include>
-		order by b.article_no desc
+		order by b.bullet is NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
 
