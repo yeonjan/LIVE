@@ -176,3 +176,27 @@
 ### 🌈게시글 수정
 
 ![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2022.png)
+
+### 🌈게시글 삭제
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2023.png)
+
+### 🌈Class Diagram - Aop, Controller
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2024.png)
+
+### 🌈Class Diagram - Apt Class
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2025.png)
+
+### 🌈Class Diagram - Board Class
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2026.png)
+
+### 🌈Class Diagram - Dongcode Class
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2027.png)
+
+### 🌈Class Diagram - User Class - interestArea, HouseInfo
+
+![Untitled](README%20md%20bb3616350eee4745bd543347886cf3f5/Untitled%2028.png)
