@@ -34,7 +34,7 @@
 		values (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, now())
 	</insert>
 
-	<select id="loginUser" parameterType="map" resultMap="user">
+	<select id="loginUser" parameterType="user" resultMap="user">
 		select user_id, user_name, user_password, email_id, email_domain, join_date, manager
 		from users
 		where user_id = #{userId} and user_password = #{userPwd}
