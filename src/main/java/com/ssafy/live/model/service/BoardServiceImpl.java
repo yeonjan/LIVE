@@ -52,20 +52,25 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시글 목록 조회
 	@Override
-	public List<Board> getArticleList(Map<String, String> map) throws Exception {
-		Map<String, Object> param = new HashMap<String, Object>();
-		String key = map.get("key");
-		if ("userid".equals(key))
-			key = "b.user_id";
-		param.put("key", key == null ? "" : key);
-		param.put("word", map.get("word") == null ? "" : map.get("word"));
-		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
-		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
-		param.put("start", start);
-		param.put("listsize", SizeConstant.LIST_SIZE);
-
-		return boardMapper.selectAll(param);
+	public List<Board> getArticleList() throws Exception {
+		return boardMapper.selectAll();
 	}
+	//페이지네이션 ver
+//	@Override
+//	public List<Board> getArticleList(Map<String, String> map) throws Exception {
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		String key = map.get("key");
+//		if ("userid".equals(key))
+//			key = "b.user_id";
+//		param.put("key", key == null ? "" : key);
+//		param.put("word", map.get("word") == null ? "" : map.get("word"));
+//		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
+//		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+//		param.put("start", start);
+//		param.put("listsize", SizeConstant.LIST_SIZE);
+//
+//		return boardMapper.selectAll(param);
+//	}
 
 	//게시글 조회
 	@Override
