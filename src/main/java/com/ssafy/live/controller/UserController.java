@@ -119,7 +119,9 @@ public class UserController {
 					// header
 					.setHeaderParam("algo", "HS256").setHeaderParam("type", "jwt")
 					// payload
-					.claim("id", userInfo.getUserId()).claim("name", userInfo.getUserName())
+					.claim("id", userInfo.getUserId())
+					.claim("name", userInfo.getUserName())
+					.claim("admin", userInfo.getManager())
 					.setExpiration(new Date(System.currentTimeMillis() + Expire_Minutes))
 					// signature
 					.signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes("UTF-8")).compact();
