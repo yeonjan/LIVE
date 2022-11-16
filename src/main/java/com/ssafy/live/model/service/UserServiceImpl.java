@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loginUser(Map<String, String> map) throws Exception {
-		return userMapper.loginUser(map);
+	public User loginUser(User user) throws Exception {
+		return userMapper.loginUser(user);
 	}
 
 	@Override

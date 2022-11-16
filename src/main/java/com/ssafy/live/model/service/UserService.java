@@ -10,7 +10,7 @@ public interface UserService {
 	/* 일반 유저 서비스 */
 	int idCheck(String userId) throws Exception;
 	void joinUser(User user) throws Exception;
-	User loginUser(Map<String, String> map) throws Exception;
+	User loginUser(User user) throws Exception;
 	String searchPwd(User user) throws Exception;
 	
 	/* 관리자 서비스 */
