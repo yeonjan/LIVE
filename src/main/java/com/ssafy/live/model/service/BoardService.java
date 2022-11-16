@@ -13,7 +13,9 @@ public interface BoardService {
 
 	void writeArticle(Board board) throws Exception;
 
-	List<Board> getArticleList(Map<String, String> map) throws Exception;
+	List<Board> getArticleList() throws Exception;
+	//pagenation ver
+	//List<Board> getArticleList(Map<String, String> map) throws Exception;
 
 	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 

@@ -42,24 +42,36 @@ public class BoardController {
 
 	// 글 목록 조회
 	@GetMapping("")
-	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
-		log.debug("list parameter : {}", map);
+	public ResponseEntity<?> list() throws Exception {
 
-		List<Board> list = boardService.getArticleList(map);
+		List<Board> list = boardService.getArticleList();
 		for (Board b : list) {
 			log.debug(b.toString());
 		}
-		PageNavigation pageNavigation = boardService.makePageNavigation(map);
 
-		Map<String, Object> responeMap = new HashMap<String, Object>();
-		responeMap.put("articles", list);
-		responeMap.put("navigation", pageNavigation);
-		responeMap.put("pgno", map.get("pgno"));
-		responeMap.put("key", map.get("key"));
-		responeMap.put("word", map.get("word"));
 
-		return new ResponseEntity<Map<String, Object>>(responeMap, HttpStatus.OK);
+		return new ResponseEntity<List<Board>>(list, HttpStatus.OK);
 	}
+	//페이지네이션 ver
+//	@GetMapping("")
+//	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
+//		log.debug("list parameter : {}", map);
+//
+//		List<Board> list = boardService.getArticleList(map);
+//		for (Board b : list) {
+//			log.debug(b.toString());
+//		}
+//		PageNavigation pageNavigation = boardService.makePageNavigation(map);
+//
+//		Map<String, Object> responeMap = new HashMap<String, Object>();
+//		responeMap.put("articles", list);
+//		responeMap.put("navigation", pageNavigation);
+//		responeMap.put("pgno", map.get("pgno"));
+//		responeMap.put("key", map.get("key"));
+//		responeMap.put("word", map.get("word"));
+//
+//		return new ResponseEntity<Map<String, Object>>(responeMap, HttpStatus.OK);
+//	}
 
 	// 글 쓰기
 	@PostMapping("")
