@@ -92,15 +92,15 @@ public class UserController {
 	}
 
 	@PostMapping("/join")
-	public ResponseEntity<?> join(@RequestBody User user, Model model) {
+	public ResponseEntity<?> join(@RequestBody User user) {
 		log.debug("userDto info : {}", user);
 		try {
 			userService.joinUser(user);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
+			return new ResponseEntity<String>("회원 가입 중 문제 발생!!!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
