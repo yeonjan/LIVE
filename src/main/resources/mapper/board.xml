@@ -12,7 +12,7 @@
 		<result column="content" property="content" />
 		<result column="hit" property="hit" />
 		<result column="register_time" property="registerTime" />
-		<result column="bullet" property="bullet"/>
+		<result column="bullet" property="bullet" />
 	</resultMap>
 
 	<resultMap type="board" id="viewArticle" extends="article">
@@ -38,7 +38,8 @@
 	</sql>
 
 	<insert id="insertArticle" parameterType="board">
-		insert into board (user_id, subject, content, hit, register_time, bullet)
+		insert into board (user_id, subject, content, hit, register_time,
+		bullet)
 		values (#{userId}, #{subject}, #{content}, 0, now(),#{bullet})
 		<!-- insert 후 pk값 얻어오기 -->
 		<selectKey resultType="int" keyProperty="articleNo"
@@ -46,32 +47,43 @@
 			select last_insert_id()
 		</selectKey>
 	</insert>
-	
+
 	<select id="selectAll" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit,
+		select b.article_no, b.user_id,
+		b.subject, b.content, b.hit,
 		b.register_time, b.bullet, u.user_name
 		from board b, users u
 		where b.user_id =
 		u.user_id
-		order by b.bullet is NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no desc
+		order by b.bullet is
+		NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no desc
 	</select>
-	
-<!-- 	<select id="selectAll" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit,
-		b.register_time, b.bullet, u.user_name
-		from board b, users u
-		where b.user_id =
-		u.user_id
-		<include refid="search"></include>
-		order by b.bullet is NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no desc
-		limit #{start}, #{listsize}
-	</select> -->
-	
-	<select id="noticeSelectAll" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit,
-		b.register_time, b.bullet, u.user_name
-		from board b, users u
+
+	<!-- <select id="selectAll" parameterType="map" resultMap="article"> select 
+		b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, b.bullet, 
+		u.user_name from board b, users u where b.user_id = u.user_id <include refid="search"></include> 
+		order by b.bullet is NULL ASC, field(b.bullet,'공지','일반','글머리'), b.article_no 
+		desc limit #{start}, #{listsize} </select> -->
+
+	<select id="selectNotice" resultMap="article">
+		select b.article_no,
+		b.user_id, b.subject, b.content, b.hit,
+		b.register_time, b.bullet,
+		u.user_name
+		from board b
+		left outer join users u
+		on b.user_id=u.user_id
 		where b.bullet = '공지'
+	</select>
+	<select id="selectCommunity" resultMap="article">
+		select b.article_no,
+		b.user_id, b.subject, b.content, b.hit,
+		b.register_time, b.bullet,
+		u.user_name
+		from board b
+		left outer join users u
+		on b.user_id=u.user_id
+		where b.bullet != '공지'
 	</select>
 
 	<insert id="registerFile" parameterType="board">
@@ -99,7 +111,7 @@
 	<select id="getArticle" parameterType="int"
 		resultMap="viewArticle">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit,
-		b.register_time, u.user_name
+		b.register_time,b.bullet, u.user_name
 		from board b, users u
 		where b.user_id =
 		u.user_id
@@ -125,12 +137,14 @@
 		update board
 		set subject
 		= #{subject}, content = #{content},hit=#{hit}
-		where article_no = #{articleNo}
+		where article_no =
+		#{articleNo}
 	</update>
 
 	<delete id="deleteFile" parameterType="int">
 		delete from fileinfo
-		where article_no = #{articleNo}
+		where
+		article_no = #{articleNo}
 	</delete>
 
 	<delete id="deleteArticle" parameterType="int">

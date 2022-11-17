@@ -14,7 +14,7 @@ public class Board {
     private String userId;
     private String userName;
     private String subject;
-    private String content;
+    private byte[] content;
     private int hit;
     private String registerTime;
     private String bullet;

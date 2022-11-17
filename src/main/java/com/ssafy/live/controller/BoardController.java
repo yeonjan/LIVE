@@ -42,17 +42,17 @@ public class BoardController {
 
 	// 글 목록 조회
 	@GetMapping("")
-	public ResponseEntity<?> list() throws Exception {
+	public ResponseEntity<?> list(@RequestParam("type") String type) throws Exception {
+		log.debug(type);
+		List<Board> list = boardService.getArticleList(type);
 
-		List<Board> list = boardService.getArticleList();
 		for (Board b : list) {
 			log.debug(b.toString());
 		}
 
-
 		return new ResponseEntity<List<Board>>(list, HttpStatus.OK);
 	}
-	//페이지네이션 ver
+	// 페이지네이션 ver
 //	@GetMapping("")
 //	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
 //		log.debug("list parameter : {}", map);
@@ -99,7 +99,7 @@ public class BoardController {
 	public ResponseEntity<Board> detail(@PathVariable int articleNo) throws Exception {
 		boardService.updateHit(articleNo);
 		Board board = boardService.getArticle(articleNo);
-
+		log.debug(board.toString());
 		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}
 
