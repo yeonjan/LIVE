@@ -36,7 +36,7 @@ public class AdminUserController {
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
 		log.debug("list parameter : {}", map);
 
-		List<Board> list = boardService.getNoticeList(map);
+		List<Board> list = boardService.getNoticeList();
 		for (Board b : list) {
 			log.debug(b.toString());
 		}

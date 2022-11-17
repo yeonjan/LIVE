@@ -12,8 +12,9 @@ import com.ssafy.live.util.PageNavigation;
 public interface BoardService {
 
 	void writeArticle(Board board) throws Exception;
-
-	List<Board> getArticleList() throws Exception;
+	List<Board> getArticleList(String type) throws Exception;
+	
+	//List<Board> getArticleList() throws Exception;
 	//pagenation ver
 	//List<Board> getArticleList(Map<String, String> map) throws Exception;
 
@@ -32,5 +33,6 @@ public interface BoardService {
 	void deleteFileInServer(int articleNo) throws Exception;
 	// 관리자 기능
 	// 공지사항 리스트 가져오기
-	List<Board> getNoticeList(Map<String, String> map) throws Exception;
+	List<Board> getNoticeList() throws Exception;
+	
 }

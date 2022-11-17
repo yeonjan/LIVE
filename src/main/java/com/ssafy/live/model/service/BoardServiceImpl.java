@@ -52,8 +52,12 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시글 목록 조회
 	@Override
-	public List<Board> getArticleList() throws Exception {
-		return boardMapper.selectAll();
+	public List<Board> getArticleList(String type) throws Exception {
+		if (type.equals("공지사항")) {
+			return boardMapper.selectNotice();
+		}else {
+			return boardMapper.selectCommunity();
+		}
 	}
 	//페이지네이션 ver
 //	@Override
@@ -195,14 +199,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Board> getNoticeList(Map<String, String> map) throws Exception {
-		Map<String, Object> param = new HashMap<String, Object>();
-		int pgNo = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
-		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
-		param.put("start", start);
-		param.put("listsize", SizeConstant.LIST_SIZE);
-
-		return boardMapper.noticeSelectAll(param);
+	public List<Board> getNoticeList() throws Exception {
+		return boardMapper.selectNotice();
 	}
+
 
 }
