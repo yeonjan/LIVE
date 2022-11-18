@@ -58,4 +58,15 @@ public class UserServiceImpl implements UserService {
 	public String searchPwd(User user) throws Exception {
 		return userMapper.searchPwd(user);
 	}
+
+	@Override
+	public void saveRefreshToken(String userId, String token) {
+		userMapper.saveRefreshToken(userId,token);
+	}
+
+	@Override
+	public void deleteRefreshToken(String userId) {
+		userMapper.deleteRefreshToken(userId);
+		
+	}
 }

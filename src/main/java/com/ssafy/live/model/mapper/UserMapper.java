@@ -23,4 +23,9 @@ public interface UserMapper {
 	void updateUser(User user) throws SQLException;
 	void deleteUser(String userId) throws SQLException;
 	
+	/*토큰 */
+	void saveRefreshToken(String userId, String token);
+	void deleteRefreshToken(String userId);
+	
+	
 }
