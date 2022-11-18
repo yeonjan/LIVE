@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.live.model.dto.Board;
+import com.ssafy.live.model.dto.User;
 import com.ssafy.live.model.service.BoardService;
+import com.ssafy.live.model.service.UserService;
 import com.ssafy.live.util.PageNavigation;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminUserController {
 	private BoardService boardService;
+	private UserService userService;
 
 	@Autowired
-	public AdminUserController(BoardService boardService) {
+	public AdminUserController(BoardService boardService, UserService userService) {
 		this.boardService = boardService;
+		this.userService = userService;
 	}
 	
 	// 공지사항 목록 조회
@@ -51,22 +55,21 @@ public class AdminUserController {
 	}
 	
 
-//	@GetMapping(value = "/user")
-//	public ResponseEntity<?> userList() {
-//		log.debug("userList call");
-//		try {
-//			List<User> list = userService.listUser(null);
-//			if (list != null && !list.isEmpty()) {
-//				return new ResponseEntity<List<User>>(list, HttpStatus.OK);
-////				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
-//			} else {
-//				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//			}
-//		} catch (Exception e) {
-//			return exceptionHandling(e);
-//		}
-//
-//	}
+	@GetMapping("/manage")
+	public ResponseEntity<?> userList() {
+		log.debug("userList call");
+		try {
+			List<User> list = userService.listUser(null);
+			if (list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+
+	}
 //
 //	@PostMapping(value = "/user")
 //	public ResponseEntity<?> userRegister(@RequestBody User user) {
