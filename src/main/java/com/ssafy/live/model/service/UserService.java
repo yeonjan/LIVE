@@ -10,7 +10,6 @@ public interface UserService {
 	/* 일반 유저 서비스 */
 	int idCheck(String userId) throws Exception;
 	void joinUser(User user) throws Exception;
-	User loginUser(User user) throws Exception;
 	String searchPwd(User user) throws Exception;
 	
 	/* 관리자 서비스 */
@@ -20,4 +19,9 @@ public interface UserService {
 	
 	/* 공통 서비스 */
 	User getUser(String userId) throws Exception;
+	
+	/* 토큰 사용 */
+	User loginUser(User user) throws Exception;
+	void saveRefreshToken(String userId,String token);
+	void deleteRefreshToken(String userId);
 }

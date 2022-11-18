@@ -20,14 +20,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.live.model.dto.User;
 import com.ssafy.live.model.service.UserService;
+import com.ssafy.live.util.JwtService;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -36,10 +34,12 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
+	private final JwtService jwtService;
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, JwtService jwtService) {
 		log.info("UserController 생성자 호출!!!");
+		this.jwtService = jwtService;
 		this.userService = userService;
 	}
 
@@ -104,37 +104,39 @@ public class UserController {
 		}
 	}
 
+	/*
+	 * 로그인 
+	 */
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user, Model model, HttpSession session,
-			HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+
 		// 유저 정보 조회
 		User userInfo = userService.loginUser(user);
-		final int Expire_Minutes = 1000 * 60 * 10;
-		final String SECRET_KEY = "ssafy";
 
 		// 로그인 성공
 		if (userInfo != null) {
 
-			String token = Jwts.builder()
-					// header
-					.setHeaderParam("algo", "HS256").setHeaderParam("type", "jwt")
-					// payload
-					.claim("id", userInfo.getUserId())
-					.claim("name", userInfo.getUserName())
-					.claim("admin", userInfo.getManager())
-					.setExpiration(new Date(System.currentTimeMillis() + Expire_Minutes))
-					// signature
-					.signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes("UTF-8")).compact();
-
-			log.debug("발급된 토큰 : {}", token);
+			String accessToken = jwtService.createAccessToken(userInfo);
+			String refreshToken = jwtService.createRefreshToken();
+			userService.saveRefreshToken(userInfo.getUserId(), refreshToken);
 
 			Map<String, String> result = new HashMap<String, String>();
-			result.put("token", token);
+			result.put("access-token", accessToken);
+			result.put("refresh-token", refreshToken);
 			return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
 		}
 		// 로그인 실패
 		else
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+	}
+	
+	/*
+	 * 로그아웃 
+	 */
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(@RequestParam("userId") String userId){
+		userService.deleteRefreshToken(userId);
+		return null;
 	}
 
 	@GetMapping("/list")
