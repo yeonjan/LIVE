@@ -1,5 +1,6 @@
 package com.ssafy.live.model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUser(String userId) throws Exception {
+	public User getUser(String userId) throws SQLException{
 		return userMapper.getUser(userId);
 	}
 
@@ -68,5 +69,10 @@ public class UserServiceImpl implements UserService {
 	public void deleteRefreshToken(String userId) {
 		userMapper.deleteRefreshToken(userId);
 		
+	}
+
+	@Override
+	public String getRefreshToken(String userId) {
+		return userMapper.getRefreshToken(userId);
 	}
 }

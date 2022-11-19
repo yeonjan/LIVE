@@ -1,10 +1,12 @@
 package com.ssafy.live.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -105,17 +107,16 @@ public class UserController {
 	}
 
 	/*
-	 * 로그인 
+	 * 로그인
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) throws Exception {
 
 		// 유저 정보 조회
 		User userInfo = userService.loginUser(user);
 
 		// 로그인 성공
 		if (userInfo != null) {
-
 			String accessToken = jwtService.createAccessToken(userInfo);
 			String refreshToken = jwtService.createRefreshToken();
 			userService.saveRefreshToken(userInfo.getUserId(), refreshToken);
@@ -129,14 +130,54 @@ public class UserController {
 		else
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	/*
-	 * 로그아웃 
+	 * 로그아웃
 	 */
 	@PostMapping("/logout")
-	public ResponseEntity<?> logout(@RequestParam("userId") String userId){
+	public ResponseEntity<?> logout(@RequestParam("userId") String userId) {
 		userService.deleteRefreshToken(userId);
-		return null;
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	/*
+	 * accessToken 유효성 검증 //200 or 401
+	 */
+	@GetMapping("/validate/access")
+	public ResponseEntity<?> validateAccessToken(HttpServletRequest request) {
+		String accessToken = request.getHeader("Authorization");
+		log.debug(accessToken);
+		if (jwtService.validateToken(accessToken)) {
+			log.info("사용 가능한 access토큰");
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} else {
+			log.error("사용 불가능 토큰!!!");
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+		}
+	}
+
+	@PostMapping("/validate/refresh")
+	public ResponseEntity<?> reIssueRefreshToken(@RequestBody User userInfo, HttpServletRequest request)
+			throws Exception {
+		
+		String userId=userInfo.getUserId();
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = request.getHeader("refresh-token");
+		log.debug("token : {}, memberDto : {}", token, userId);
+		
+		if (jwtService.validateToken(token) && token.equals(userService.getRefreshToken(userInfo.getUserId()))) {
+			String accessToken = jwtService.createAccessToken(userInfo);
+			log.debug("token : {}", accessToken);
+			log.debug("정상적으로 액세스토큰 재발급");
+			resultMap.put("access-token", accessToken);
+
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		} else {
+			log.debug("refresh토큰 유효성 검증 실패 ");
+			//userService.deleteRefreshToken(userId);
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+		}
+
 	}
 
 	@GetMapping("/list")

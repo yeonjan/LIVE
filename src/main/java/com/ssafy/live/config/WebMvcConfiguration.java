@@ -35,12 +35,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		registry
 				// API에 접근 가능한 URL
 				.addMapping("/**").allowedOrigins("*")
-				// 허용할 메소드 설
+				// 허용할 메소드 설정 
 				.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
 						HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
 						HttpMethod.PATCH.name())
+				.allowedHeaders("*")
 				// preflight 요청 결과의 캐시를 저장할 수 있는 시간
 				.maxAge(1800);
+		
 	}
 
 	// 인터셉터 주소 설정
