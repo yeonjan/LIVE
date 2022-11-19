@@ -75,15 +75,13 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(@RequestParam MultipartFile[] files, Board board, HttpSession session)
+	public ResponseEntity<Void> write(@RequestParam(required = false) MultipartFile[] files, Board board)
 			throws Exception {
-		User loginUser = (User) session.getAttribute("userInfo");
-		board.setUserId(loginUser.getUserId());
-
+		log.debug("글 쓰기 : {}", board.toString());
 		// log.debug("글 입력 전 dto : {}", board.toString());
 
 		// 파일 정보
-		if (!files[0].isEmpty()) {
+		if (files!=null&&!files[0].isEmpty()) {
 			List<FileInfo> fileInfos = boardService.saveFileInServer(files);
 			log.debug(board.toString());
 			board.setFileInfos(fileInfos);
