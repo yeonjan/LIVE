@@ -26,8 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtServiceImpl implements JwtService {
 
 	private static final String SALT = "liveSecretKey";
-	private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
+	private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000*3 ; //test
+	//private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
 	private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 2주
+	//private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 6; // test
 
 	@Override
 	public <T> String createAccessToken(User user) throws UnsupportedEncodingException {
@@ -64,6 +66,7 @@ public class JwtServiceImpl implements JwtService {
 	// 토큰 유효성 검사
 	@Override
 	public boolean validateToken(String jwt) {
+		log.debug("유효성 검사 "+jwt);
 		try {
 			// json Web Signature? 서버에서 인증을 근거로 인증정보를 서버의 private key로 서명 한것을 토큰화 한것
 			Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);

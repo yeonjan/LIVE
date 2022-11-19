@@ -26,6 +26,7 @@ public interface UserMapper {
 	/*토큰 */
 	void saveRefreshToken(String userId, String token);
 	void deleteRefreshToken(String userId);
+	String getRefreshToken(String userId);
 	
 	
 }
