@@ -28,11 +28,12 @@ public class JwtServiceImpl implements JwtService {
 	private static final String SALT = "liveSecretKey";
 	private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000*3 ; //test
 	//private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
-	private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 2주
-	//private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 6; // test
+	//private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 2주
+	private static final int REFRESH_TOKEN_EXPIRE_TIME = 1000 * 6; // test
 
 	@Override
 	public <T> String createAccessToken(User user) throws UnsupportedEncodingException {
+		log.debug("access 토큰 발급 "+user.toString());
 		String toekn = Jwts.builder()
 				// Header : 토큰의 타입, 해쉬 알고리즘
 				.setHeaderParam("typ", "JWT").setHeaderParam("regDate", System.currentTimeMillis()) // 생성 시간

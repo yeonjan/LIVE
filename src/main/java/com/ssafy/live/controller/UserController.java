@@ -57,10 +57,9 @@ public class UserController {
 
 	// 회원 정보 삭제
 	@DeleteMapping("/{userid}")
-	public ResponseEntity<?> delete(HttpSession session) throws Exception {
-		log.debug(" 회원 정보 삭제 호출 성공 ");
-		User user = (User) session.getAttribute("userInfo");
-		userService.deleteUser(user.getUserId());
+	public ResponseEntity<?> delete(@PathVariable("userid") String userId) throws Exception {
+		log.debug(" 회원 정보 삭제 호출 성공 "+userId);
+		userService.deleteUser(userId);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -75,12 +74,10 @@ public class UserController {
 	}
 
 	// 회원 정보 조회
-	@GetMapping("/{userid}")
-	public ResponseEntity<?> get(HttpSession session) throws Exception {
-		log.debug(" 회원 정보 조회 호출 성공 ");
-		User user = (User) session.getAttribute("userInfo");
-		log.debug(" userId : {}", user.getUserId());
-		user = userService.getUser(user.getUserId());
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> get(@PathVariable String userId) throws Exception {
+		log.debug(" 회원 정보 조회 호출 성공 "+userId);
+		User user = userService.getUser(userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
@@ -161,12 +158,13 @@ public class UserController {
 			throws Exception {
 		
 		String userId=userInfo.getUserId();
+		User user=userService.getUser(userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = request.getHeader("refresh-token");
-		log.debug("token : {}, memberDto : {}", token, userId);
+		log.debug("token : {}, userId : {}", token, user.toString());
 		
-		if (jwtService.validateToken(token) && token.equals(userService.getRefreshToken(userInfo.getUserId()))) {
-			String accessToken = jwtService.createAccessToken(userInfo);
+		if (jwtService.validateToken(token) && token.equals(userService.getRefreshToken(userId))) {
+			String accessToken = jwtService.createAccessToken(user);
 			log.debug("token : {}", accessToken);
 			log.debug("정상적으로 액세스토큰 재발급");
 			resultMap.put("access-token", accessToken);

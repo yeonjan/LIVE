@@ -59,7 +59,7 @@
 
 	<select id="getUser" parameterType="string" resultMap="userAll">
 		select
-		user_id, user_name, user_password, email_id, email_domain, join_date
+		user_id, user_name, email_id, email_domain, join_date,manager
 		from users
 		where user_id = #{userId}
 	</select>
