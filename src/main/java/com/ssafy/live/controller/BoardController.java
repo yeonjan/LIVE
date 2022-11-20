@@ -75,8 +75,9 @@ public class BoardController {
 
 	// 글 쓰기
 	@PostMapping("")
-	public ResponseEntity<Void> write(@RequestParam(required = false) MultipartFile[] files, Board board)
+	public ResponseEntity<?> write(@RequestParam(required = false) MultipartFile[] files, Board board)
 			throws Exception {
+		Map<String,String> resultMap=new HashMap<>();
 		log.debug("글 쓰기 : {}", board.toString());
 		// log.debug("글 입력 전 dto : {}", board.toString());
 
@@ -87,9 +88,18 @@ public class BoardController {
 			board.setFileInfos(fileInfos);
 		}
 
-		boardService.writeArticle(board);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		String articleNo= String.valueOf(boardService.writeArticle(board));
+		resultMap.put("articleNo",articleNo);
+		return new ResponseEntity<Map<String,String>>(resultMap,HttpStatus.CREATED);
 
+	}
+	// 게시글 수정
+	@PutMapping("")
+	public ResponseEntity<Void> modify(@RequestParam(required = false) MultipartFile[] files, Board board) throws Exception {
+		log.debug("수정 board dto : {}", board.toString());
+		boardService.modifyArticle(board);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	// 게시글 상세 조회
@@ -109,14 +119,6 @@ public class BoardController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	// 게시글 수정
-	@PutMapping("/{articleNo}")
-	public ResponseEntity<Void> modify(@PathVariable int articleNo, @RequestBody Board board) throws Exception {
-		log.debug("수정 board dto : {}", board.toString());
-		board.setArticleNo(articleNo);
-		boardService.modifyArticle(board);
 
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
 
 }
