@@ -11,7 +11,7 @@ import com.ssafy.live.util.PageNavigation;
 
 public interface BoardService {
 
-	void writeArticle(Board board) throws Exception;
+	int writeArticle(Board board) throws Exception;
 	List<Board> getArticleList(String type) throws Exception;
 	
 	//List<Board> getArticleList() throws Exception;

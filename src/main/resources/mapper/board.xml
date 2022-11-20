@@ -37,7 +37,7 @@
 		</if>
 	</sql>
 
-	<insert id="insertArticle" parameterType="board">
+	<insert id="insertArticle" parameterType="board" useGeneratedKeys="true" keyProperty="articleNo">
 		insert into board (user_id, subject, content, hit, register_time,
 		bullet)
 		values (#{userId}, #{subject}, #{content}, 0, now(),#{bullet})

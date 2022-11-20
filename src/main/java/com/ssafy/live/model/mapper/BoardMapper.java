@@ -12,7 +12,7 @@ import com.ssafy.live.model.dto.FileInfo;
 @Mapper
 public interface BoardMapper {
 	
-	int insertArticle(Board board) throws SQLException;
+	void insertArticle(Board board) throws SQLException;
 	void registerFile(Board board) throws Exception;
 	List<Board> selectAll() throws SQLException;
 	List<Board> selectNotice() throws SQLException;

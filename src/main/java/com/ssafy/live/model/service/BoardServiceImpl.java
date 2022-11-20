@@ -38,15 +38,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void writeArticle(Board board) throws Exception {
+	public int writeArticle(Board board) throws Exception {
 		log.debug("boardService : {}",board.toString());
 		
 		boardMapper.insertArticle(board);
+		
 		log.debug("글입력 후 dto : " + board);
 		List<FileInfo> fileInfos = board.getFileInfos();
 		if (fileInfos != null && !fileInfos.isEmpty()) {
 			boardMapper.registerFile(board);
 		}
+		
+		return board.getArticleNo();
 
 	}
 
