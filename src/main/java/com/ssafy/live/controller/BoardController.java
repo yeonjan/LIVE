@@ -118,7 +118,4 @@ public class BoardController {
 		boardService.deleteArticle(articleNo);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
-
-
 }

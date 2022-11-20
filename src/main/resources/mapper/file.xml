@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.live.model.mapper.FileMapper">
+
+	<resultMap type="FileInfo" id="FileInfo">
+		<result column="save_folder" property="saveFolder" />
+		<result column="save_file" property="saveFileName" />
+		<result column="original_file" property="originalFileName" />
+	</resultMap>
+
+	<select id="selectFile" resultMap="FileInfo"
+		parameterType="fileRequestDto">
+		SELECT save_folder, save_file, original_file
+		FROM
+		fileinfo
+		where article_no=#{articleNo}
+		and original_file=#{fileName}
+	</select>
+
+	<select id="selectFileNameByArticleNo" resultType="String"
+		parameterType="String">
+		SELECT original_file 
+		FROM fileinfo
+		where
+		article_no=#{articleNo}
+	</select>
+
+
+</mapper>
