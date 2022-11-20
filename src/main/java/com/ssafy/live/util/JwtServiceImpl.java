@@ -39,7 +39,7 @@ public class JwtServiceImpl implements JwtService {
 				// Payload : 유효기간(Expiration), 토큰 제목 (Subject), 데이터 (Claim) 등 정보 세팅.
 				.setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME)) // 토큰 유효기간
 				.setSubject("access-token") // 토큰 제목 설정
-				.claim("id", user.getUserId()).claim("name", user.getUserName()).claim("admin", user.getManager())
+				.claim("id", user.getUserId()).claim("name", user.getUserName()).claim("admin", user.getManager().equals("T")?true:false)
 				// Signature 설정 : secret key를 활용한 암호화.
 				.signWith(SignatureAlgorithm.HS256, this.generateKey()).compact(); // 직렬화 처리.
 		return toekn;
