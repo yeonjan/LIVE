@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 		// true 매개값을 전달하면 multipart 형식의 메세지 전달이 가능.문자 인코딩 설정도 가능하다.
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
+			//helper.setFrom(setFrom);
 			helper.setTo(toMail);
 			helper.setSubject(title);
 			// true 전달 > html 형식으로 전송 , 작성하지 않으면 단순 텍스트로 전달.
