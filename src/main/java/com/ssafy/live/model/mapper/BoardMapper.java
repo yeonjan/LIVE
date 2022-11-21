@@ -23,7 +23,6 @@ public interface BoardMapper {
 	Board getArticle(int articleNo) throws SQLException;
 	void updateHit(int articleNo) throws SQLException;
 	void modifyArticle(Board boardDto) throws SQLException;
-	void deleteFile(int articleNo) throws Exception;
 	void deleteArticle(int articleNo) throws SQLException;
-	List<FileInfo> fileInfoList(int articleNo) throws Exception;
+	List<Integer> selectArticleNo(String userId) throws SQLException;
 }

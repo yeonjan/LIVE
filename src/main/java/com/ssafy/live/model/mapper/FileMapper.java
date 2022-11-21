@@ -13,4 +13,6 @@ public interface FileMapper {
 	
 	FileInfo selectFile(FileRequestDto fileRequestDto) throws SQLException;
 	List<String> selectFileNameByArticleNo(String articleNo) throws SQLException;
+	List<FileInfo> fileInfoList(int articleNo);
+	void deleteFile(int articleNo);
 }

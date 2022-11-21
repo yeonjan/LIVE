@@ -21,11 +21,25 @@
 
 	<select id="selectFileNameByArticleNo" resultType="String"
 		parameterType="String">
-		SELECT original_file 
+		SELECT original_file
 		FROM fileinfo
 		where
 		article_no=#{articleNo}
 	</select>
+
+	<select id="fileInfoList" resultMap="FileInfo">
+		select save_folder,
+		original_file, save_file
+		from fileinfo
+		where article_no = #{articleNo}
+	</select>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from fileinfo
+		where
+		article_no = #{articleNo}
+	</delete>
+	
 
 
 </mapper>
