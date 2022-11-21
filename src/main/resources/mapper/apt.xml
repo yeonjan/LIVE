@@ -12,13 +12,19 @@
 		<result column="apt_amount" property="amount"/>
 		<result column="noo" property="no"/>
 	</resultMap>
-
+	
 	<select id="listApt" parameterType="map" resultType="apt">
+		select aptCode, apartmentName
+		from houseinfo
+		where dongCode = #{regcode}
+	</select>
+
+	<select id="listDetailApt" parameterType="map" resultType="apt">
 		select info.apartmentName, deal.floor, deal.area, info.dong, deal.dealAmount, info.lng, info.lat, deal.no, deal.dealYear, deal.dealMonth 
 		from houseinfo info
 		join housedeal deal
 		on info.aptCode = deal.aptCode
-		where info.dongCode = #{regcode} and deal.dealYear= #{year} and deal.dealMonth = #{month}
+		where info.dongCode = #{regcode}
 	</select>
 	
 	<insert id="registerInterest" parameterType="string">

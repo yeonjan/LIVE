@@ -11,6 +11,8 @@ import com.ssafy.live.model.dto.Interest;
 
 @Mapper
 public interface AptMapper {
+	// 아파트 상세 매매정보 조회
+	List<Apt> listDetailApt(Map<String, String> map) throws SQLException;
 	// 아파트 매매 정보 조회
 	List<Apt> listApt(Map<String, String> map) throws SQLException;
 	// 관심매물 등록
