@@ -49,6 +49,17 @@ public class AptController {
 		data.put("regcodes", lists);
 		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
 	}
+	
+	@PostMapping("/detail")
+	public ResponseEntity<?> listDetailApt(@RequestBody Map<String, String> map) throws SQLException {
+		log.debug("아파트 상세조회 호출 !!!!!");
+		log.debug(map.toString());
+		List<Apt> lists = new ArrayList<Apt>();
+		lists = aptService.listApt(map);
+		Map<String, List<Apt>> data = new HashMap<>();
+		data.put("regcodes", lists);
+		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
+	}
 
 	@PostMapping("/interest")
 	public ResponseEntity<?> registerInterest(@RequestBody Map<String, String> map, HttpSession session) throws SQLException {
