@@ -32,4 +32,12 @@ public interface UserService {
 	void deleteRefreshToken(String userId);
 
 	String getRefreshToken(String userId);
+	
+	/*이메일 인증*/
+	int makeRandomNum();
+	
+	String joinEmail(String email);
+
+	void sendMail(String setFrom, String toMail, String title, String content);
+
 }

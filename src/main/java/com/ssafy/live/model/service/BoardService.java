@@ -28,11 +28,11 @@ public interface BoardService {
 
 	void deleteArticle(int articleNo) throws Exception;
 
-	List<FileInfo> saveFileInServer(MultipartFile[] files) throws Exception;
-
-	void deleteFileInServer(int articleNo) throws Exception;
+	
 	// 관리자 기능
 	// 공지사항 리스트 가져오기
 	List<Board> getNoticeList() throws Exception;
+	
+	List<Integer> getArticleNoByUserId(String userId) throws Exception;
 	
 }

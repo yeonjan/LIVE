@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.live.model.dto.Board;
 import com.ssafy.live.model.dto.FileInfo;
 import com.ssafy.live.model.mapper.BoardMapper;
+import com.ssafy.live.model.mapper.FileMapper;
 import com.ssafy.live.util.PageNavigation;
 import com.ssafy.live.util.SizeConstant;
 
@@ -29,12 +30,15 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper boardMapper;
+	private FileMapper fileMapper;
+
 	@Autowired
 	private ServletContext servletContext;
 
 	@Autowired
-	public BoardServiceImpl(BoardMapper boardMapper) {
+	public BoardServiceImpl(BoardMapper boardMapper, FileMapper fileMapper) {
 		this.boardMapper = boardMapper;
+		this.fileMapper = fileMapper;
 	}
 
 	@Override
@@ -101,7 +105,7 @@ public class BoardServiceImpl implements BoardService {
 	//게시글 삭제
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
-		boardMapper.deleteFile(articleNo);
+		fileMapper.deleteFile(articleNo);
 		boardMapper.deleteArticle(articleNo);
 
 	}
@@ -146,64 +150,14 @@ public class BoardServiceImpl implements BoardService {
 		return pageNavigation;
 	}
 
-	//서버에 파일 저장
-	@Override
-	public List<FileInfo> saveFileInServer(MultipartFile[] files) throws IllegalStateException, IOException {
-		// 파일 정보
-		List<FileInfo> fileInfos = new ArrayList<FileInfo>();
-		for (MultipartFile file : files) {
-			// 파일 이름
-			String originalFileName = file.getOriginalFilename();
-			String uuid = UUID.randomUUID().toString();
-			String saveFileName = File.separator + uuid + "_" + originalFileName;
-
-			// 파일 저장 경로
-			String realPath = servletContext.getRealPath("/resources/img");
-			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-
-			String savePath = realPath + File.separator + today;
-			log.debug(savePath);
-
-			File folder = new File(savePath);
-			if (!folder.exists())
-				folder.mkdirs();
-
-			// 파일 저장
-			file.transferTo(new File(savePath + saveFileName));
-
-			FileInfo fileInfo = new FileInfo();
-			fileInfo.setSaveFolder(today);
-			fileInfo.setOriginalFileName(originalFileName);
-			fileInfo.setSaveFileName(saveFileName);
-			fileInfos.add(fileInfo);
-
-		}
-		return fileInfos;
-	}
-
-	//서버에서 파일 삭제
-	@Override
-	public void deleteFileInServer(int articleNo) throws Exception {
-
-		String realPath = servletContext.getRealPath("/resources/img");
-
-		List<FileInfo> fileInfos = boardMapper.fileInfoList(articleNo);
-		for (FileInfo fileInfo : fileInfos) {
-			String saveFolder = fileInfo.getSaveFolder();
-			String savePath = realPath + File.separator + saveFolder;
-			String saveFileName = fileInfo.getSaveFileName();
-
-			log.debug(savePath);
-			log.debug(saveFileName);
-			File targetFile = new File(savePath, saveFileName);
-			targetFile.delete();
-
-		}
-	}
-
 	@Override
 	public List<Board> getNoticeList() throws Exception {
 		return boardMapper.selectNotice();
+	}
+
+	@Override
+	public List<Integer> getArticleNoByUserId(String userId) throws Exception {
+		return boardMapper.selectArticleNo(userId);
 	}
 
 

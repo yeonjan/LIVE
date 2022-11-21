@@ -3,6 +3,7 @@ package com.ssafy.live.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.live.model.dto.User;
+import com.ssafy.live.model.service.BoardService;
+import com.ssafy.live.model.service.FileService;
 import com.ssafy.live.model.service.UserService;
 import com.ssafy.live.util.JwtService;
 
@@ -37,12 +40,17 @@ public class UserController {
 
 	private final UserService userService;
 	private final JwtService jwtService;
+	private final BoardService boardService;
+	private final FileService fileService;
 
 	@Autowired
-	public UserController(UserService userService, JwtService jwtService) {
+	public UserController(UserService userService, JwtService jwtService, BoardService boardService,
+			FileService fileService) {
 		log.info("UserController 생성자 호출!!!");
 		this.jwtService = jwtService;
 		this.userService = userService;
+		this.boardService = boardService;
+		this.fileService = fileService;
 	}
 
 	// 회원 비밀번호 찾기
@@ -58,7 +66,10 @@ public class UserController {
 	// 회원 정보 삭제
 	@DeleteMapping("/{userid}")
 	public ResponseEntity<?> delete(@PathVariable("userid") String userId) throws Exception {
-		log.debug(" 회원 정보 삭제 호출 성공 "+userId);
+		log.debug(" 회원 정보 삭제 호출 성공 " + userId);
+
+		List<Integer> articleNoList = boardService.getArticleNoByUserId(userId);
+		fileService.deleteFileInServerByUser(articleNoList);
 		userService.deleteUser(userId);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -76,7 +87,7 @@ public class UserController {
 	// 회원 정보 조회
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> get(@PathVariable String userId) throws Exception {
-		log.debug(" 회원 정보 조회 호출 성공 "+userId);
+		log.debug(" 회원 정보 조회 호출 성공 " + userId);
 		User user = userService.getUser(userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
@@ -156,13 +167,13 @@ public class UserController {
 	@PostMapping("/validate/refresh")
 	public ResponseEntity<?> reIssueRefreshToken(@RequestBody User userInfo, HttpServletRequest request)
 			throws Exception {
-		
-		String userId=userInfo.getUserId();
-		User user=userService.getUser(userId);
+
+		String userId = userInfo.getUserId();
+		User user = userService.getUser(userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = request.getHeader("refresh-token");
 		log.debug("token : {}, userId : {}", token, user.toString());
-		
+
 		if (jwtService.validateToken(token) && token.equals(userService.getRefreshToken(userId))) {
 			String accessToken = jwtService.createAccessToken(user);
 			log.debug("token : {}", accessToken);
@@ -172,10 +183,20 @@ public class UserController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		} else {
 			log.debug("refresh토큰 유효성 검증 실패 ");
-			//userService.deleteRefreshToken(userId);
+			// userService.deleteRefreshToken(userId);
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
 
+	}
+	
+	@GetMapping("/mailCheck")
+	public ResponseEntity<?> mailCheck(@RequestParam("email") String email){
+		log.debug("메일체크"+email);
+		String checkNum= userService.joinEmail(email);
+		log.debug("인증번호"+checkNum);
+		return new ResponseEntity<String>(checkNum,HttpStatus.OK);
+		
+		
 	}
 
 	@GetMapping("/list")
