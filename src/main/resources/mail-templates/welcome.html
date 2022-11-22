@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <div
+      style="
+        font-family: 'Apple SD Gothic Neo', 'sans-serif' !important;
+        width: 540px;
+        height: 600px;
+        border-top: 4px solid #ECB365;
+        margin: 100px auto;
+        padding: 30px 0;
+        box-sizing: border-box;
+      "
+    >
+      <h1 style="margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400">
+        <span style="font-size: 15px; margin: 0 0 10px 3px">Live</span><br />
+        <span style="color: #ECB365">
+          인증 번호 확인 후</br> 이메일 인증을 완료해 주세요.</span
+        >
+      </h1>
+      <p
+        style="
+          font-size: 16px;
+          line-height: 26px;
+          margin: 30px 0 0 3px;
+          padding: 0 5px;
+        "
+      >
+        안녕하세요.<br />
+        Live 사이트 회원가입을 위한 인증번호 발송 메일입니다.<br />
+
+      </p>
+      <a
+        style="color: #fff; text-decoration: none; text-align: center"
+        href="{$find_url}"
+        target="_blank"
+        ><p
+          style="
+            display: inline-block;
+            width: 240px;
+            height: 55px;
+            margin: 30px 0 5px 8px;
+            background: #ECB365;
+            line-height: 55px;
+            vertical-align: middle;
+            font-size: 18px;
+          "
+        >
+          인증번호 : 
+          <span style="font-size: 18px" th:text="${checkNum}">123456</span>
+        </p></a>
+    </div>
+  </body>
+</html>
