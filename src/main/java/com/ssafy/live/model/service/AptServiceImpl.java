@@ -21,6 +21,11 @@ public class AptServiceImpl implements AptService {
 	private AptMapper aptMapper;
 	
 	@Override
+	public List<Apt> listDetailApt(Map<String, String> map) throws SQLException {
+		log.debug(map.toString());
+		return aptMapper.listDetailApt(map);
+	}
+	@Override
 	public List<Apt> listApt(Map<String, String> map) throws SQLException {
 		log.debug(map.toString());
 		return aptMapper.listApt(map);

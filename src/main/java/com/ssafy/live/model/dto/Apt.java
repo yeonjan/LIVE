@@ -8,8 +8,7 @@ public class Apt {
 	private String floor;
 	private String area;
 	private String dong;
-	private String dealAmount;
 	private String lng;
 	private String lat;
-	private String no;
+	private String aptCode;
 }
