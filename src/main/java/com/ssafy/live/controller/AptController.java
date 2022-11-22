@@ -55,7 +55,7 @@ public class AptController {
 		log.debug("아파트 상세조회 호출 !!!!!");
 		log.debug(map.toString());
 		List<Apt> lists = new ArrayList<Apt>();
-		lists = aptService.listApt(map);
+		lists = aptService.listDetailApt(map);
 		Map<String, List<Apt>> data = new HashMap<>();
 		data.put("regcodes", lists);
 		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
