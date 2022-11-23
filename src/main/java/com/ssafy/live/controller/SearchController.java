@@ -49,12 +49,9 @@ public class SearchController {
 		String responseBody = SearchApiService.get(apiURL, requestHeaders);
 		responseBody=responseBody.replace("<b>", "");
 		responseBody=responseBody.replace("<\\/b>", "");
-		responseBody=responseBody.replace("&apos;", "`");
-		responseBody=responseBody.replace("&gt;", ">");
-		responseBody=responseBody.replace("&lt;", "<");
-		responseBody=responseBody.replace("&amp;", "&");
-		
 
+		
+		log.debug(responseBody);
 		return new ResponseEntity<String>(responseBody, HttpStatus.OK);
 
 	}
