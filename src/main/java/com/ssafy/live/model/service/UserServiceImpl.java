@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		int checkNum = makeRandomNum();
 		String setFrom = "yeonjin137@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
 		String toMail = email;
-		String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
+		String title = "[Live]회원 가입 인증 이메일 입니다."; // 이메일 제목
 
 		Context context = new Context();
 		context.setVariable("checkNum", checkNum);
