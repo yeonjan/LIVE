@@ -62,11 +62,12 @@ public class AptController {
 	}
 
 	@PostMapping("/interest")
-	public ResponseEntity<?> registerInterest(@RequestBody Map<String, String> map, HttpSession session) throws SQLException {
+	public ResponseEntity<?> registerInterest(@RequestBody Map<String, String> map) throws SQLException {
 		log.debug("interest 등록 호출 !!!!!");
+		String userId = map.get("userId");
 		String aptCode = map.get("aptCode");
-		User user = (User) session.getAttribute("userInfo");
-		aptService.registerInterest(user.getUserId(), aptCode);
+		log.debug(userId + "  " + aptCode);
+		aptService.registerInterest(userId, aptCode);
 		return new ResponseEntity<Void> (HttpStatus.OK);
 	}
 	
