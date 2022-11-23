@@ -28,5 +28,8 @@ public interface UserMapper {
 	void deleteRefreshToken(String userId);
 	String getRefreshToken(String userId);
 	
+	/*회원 정보 수정*/
+	void updateEmail(User user) throws SQLException;
+	
 	
 }
