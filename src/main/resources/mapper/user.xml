@@ -60,7 +60,8 @@
 	<select id="getUser" parameterType="string" resultMap="userAll">
 		select
 		user_id, user_name, email_id, email_domain, join_date,manager
-		from users
+		from
+		users
 		where user_id = #{userId}
 	</select>
 
@@ -73,6 +74,12 @@
 			<if test="emailDomain != null">email_domain = #{emailDomain},</if>
 		</trim>
 		where user_id = #{userId}
+	</update>
+
+	<update id="updateEmail" parameterType="user">
+		update users
+		set email_id = #{emailId},email_domain=#{emailDomain}
+		 where user_id=#{userId}'
 	</update>
 
 	<delete id="deleteUser" parameterType="String">

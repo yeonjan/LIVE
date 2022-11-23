@@ -39,5 +39,8 @@ public interface UserService {
 	String joinEmail(String email);
 
 	void sendMail(String setFrom, String toMail, String title, String content);
+	
+	/*이메일 변경*/
+	void updateEmail(User user) throws Exception;
 
 }
