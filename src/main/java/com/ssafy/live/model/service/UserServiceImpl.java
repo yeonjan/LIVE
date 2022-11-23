@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
 
 	private UserMapper userMapper;
 	private JavaMailSenderImpl mailSender;
-	
+
 	@Autowired
-    private SpringTemplateEngine templateEngine;
+	private SpringTemplateEngine templateEngine;
 
 	@Autowired
 	private UserServiceImpl(UserMapper userMapper, JavaMailSenderImpl mailSender) {
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		int checkNum = makeRandomNum();
 		String setFrom = "yeonjin137@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
 		String toMail = email;
-		String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
+		String title = "[Live]회원 가입 인증 이메일 입니다."; // 이메일 제목
 
 		Context context = new Context();
 		context.setVariable("checkNum", checkNum);
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 		// true 매개값을 전달하면 multipart 형식의 메세지 전달이 가능.문자 인코딩 설정도 가능하다.
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			//helper.setFrom(setFrom);
+			// helper.setFrom(setFrom);
 			helper.setTo(toMail);
 			helper.setSubject(title);
 			// true 전달 > html 형식으로 전송 , 작성하지 않으면 단순 텍스트로 전달.
@@ -132,6 +132,12 @@ public class UserServiceImpl implements UserService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	@Override
+	public void updateEmail(User user) throws Exception {
+		userMapper.updateEmail(user);
 
 	}
 }

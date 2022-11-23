@@ -70,10 +70,19 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	// 회원 정보 수정
+//	// 회원 정보 수정
+//	@PutMapping("/{userid}")
+//	public ResponseEntity<?> update(@RequestBody User updateUser) throws Exception {
+//		log.debug(" 회원 정보 수정 호출 성공 ");
+//		log.debug("updateUser : {}", updateUser);
+//		userService.updateUser(updateUser);
+//		return new ResponseEntity<Void>(HttpStatus.OK);
+//	}
+//	
+	//이메일 수정
 	@PutMapping("/{userid}")
-	public ResponseEntity<?> update(@RequestBody User updateUser) throws Exception {
-		log.debug(" 회원 정보 수정 호출 성공 ");
+	public ResponseEntity<?> updateEmail(@RequestBody User updateUser) throws Exception {
+		log.debug(" 이메일 정보 수정 호출 성공 ");
 		log.debug("updateUser : {}", updateUser);
 		userService.updateUser(updateUser);
 		return new ResponseEntity<Void>(HttpStatus.OK);
