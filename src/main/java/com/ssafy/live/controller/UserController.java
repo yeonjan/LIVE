@@ -1,20 +1,15 @@
 package com.ssafy.live.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,7 +104,6 @@ public class UserController {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-//			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
 			return new ResponseEntity<String>("회원 가입 중 문제 발생!!!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
