@@ -34,11 +34,8 @@
         Live 사이트 회원가입을 위한 인증번호 발송 메일입니다.<br />
 
       </p>
-      <a
-        style="color: #fff; text-decoration: none; text-align: center"
-        href="{$find_url}"
-        target="_blank"
-        ><p
+      <div style="color: #fff; text-decoration: none; text-align: center">
+      <p
           style="
             display: inline-block;
             width: 240px;
@@ -52,7 +49,8 @@
         >
           인증번호 : 
           <span style="font-size: 18px" th:text="${checkNum}">123456</span>
-        </p></a>
+        </p>
+     </div>
     </div>
   </body>
 </html>
