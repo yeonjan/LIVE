@@ -30,15 +30,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/apts")
 @Slf4j
 public class AptController {
-	
+
 	private final AptService aptService;
-	
+
 	@Autowired
 	public AptController(AptService aptService) {
 		log.info("UserController 생성자 호출!!!");
 		this.aptService = aptService;
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<?> listApt(@RequestBody Map<String, String> map) throws SQLException {
 		log.debug("아파트 조회 호출 !!!!!");
@@ -47,9 +47,9 @@ public class AptController {
 		lists = aptService.listApt(map);
 		Map<String, List<Apt>> data = new HashMap<>();
 		data.put("regcodes", lists);
-		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
+		return new ResponseEntity<Map<String, List<Apt>>>(data, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/detail")
 	public ResponseEntity<?> listDetailApt(@RequestBody Map<String, String> map) throws SQLException {
 		log.debug("아파트 상세조회 호출 !!!!!");
@@ -58,7 +58,7 @@ public class AptController {
 		lists = aptService.listDetailApt(map);
 		Map<String, List<Apt>> data = new HashMap<>();
 		data.put("regcodes", lists);
-		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
+		return new ResponseEntity<Map<String, List<Apt>>>(data, HttpStatus.OK);
 	}
 
 	@PostMapping("/interest")
@@ -68,9 +68,9 @@ public class AptController {
 		String aptCode = map.get("aptCode");
 		log.debug(userId + "  " + aptCode);
 		aptService.registerInterest(userId, aptCode);
-		return new ResponseEntity<Void> (HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/interest")
 	public ResponseEntity<?> viewInterest(HttpSession session) throws SQLException {
 		log.debug("viewInterest 호출 !!!!!");
@@ -79,9 +79,9 @@ public class AptController {
 		lists = aptService.viewInterest(user.getUserId());
 		Map<String, List<Interest>> data = new HashMap<>();
 		data.put("regcodes", lists);
-		return new ResponseEntity<Map<String, List<Interest>>> (data, HttpStatus.OK);
+		return new ResponseEntity<Map<String, List<Interest>>>(data, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/interest/{aptCode}")
 	public String deleteInterest(@PathVariable("aptCode") String aptCode) throws SQLException {
 		log.debug("deleteInterest 호출 !!!!!");
@@ -89,7 +89,11 @@ public class AptController {
 		aptService.deleteInterest(aptCode);
 		return "관심매물 삭제 성공";
 	}
-	
-	
+
+	@GetMapping("/price/{aptCode}")
+	public ResponseEntity<?> getPriceAvg(@PathVariable("aptCode") String aptCode) throws SQLException {
+		List<Map<String, Object>> result = aptService.selectPriceAvg(aptCode);
+		return new ResponseEntity<List<Map<String, Object>>>(result, HttpStatus.OK);
+	}
+
 }
- 
