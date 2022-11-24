@@ -70,18 +70,31 @@ public class AptController {
 		aptService.registerInterest(userId, aptCode);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
-	@GetMapping("/interest")
-	public ResponseEntity<?> viewInterest(HttpSession session) throws SQLException {
+	
+	@PostMapping("/list")
+	public ResponseEntity<?> viewInterest(@RequestBody Map<String, String> map) throws SQLException {
 		log.debug("viewInterest 호출 !!!!!");
-		User user = (User) session.getAttribute("userInfo");
+		String userId = map.get("userId");
+		log.debug(userId);
 		List<Interest> lists = new ArrayList<Interest>();
-		lists = aptService.viewInterest(user.getUserId());
+		lists = aptService.viewInterest(userId);
 		Map<String, List<Interest>> data = new HashMap<>();
 		data.put("regcodes", lists);
 		return new ResponseEntity<Map<String, List<Interest>>>(data, HttpStatus.OK);
 	}
-
+	
+	@PostMapping("/aptInfo")
+	public ResponseEntity<?> interestAptInfo(@RequestBody Map<String, String> map) throws SQLException {
+		log.debug("interestAptInfo 호출 !!!!!");
+		String userId = map.get("userId");
+		log.debug(userId);
+		List<Apt> lists = new ArrayList<Apt>();
+		lists = aptService.listInterestInfo(userId);
+		Map<String, List<Apt>> data = new HashMap<>();
+		data.put("regcodes", lists);
+		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/interest/{aptCode}")
 	public String deleteInterest(@PathVariable("aptCode") String aptCode) throws SQLException {
 		log.debug("deleteInterest 호출 !!!!!");
