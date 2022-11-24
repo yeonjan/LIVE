@@ -48,5 +48,9 @@ public class AptServiceImpl implements AptService {
 		log.debug("관심 매물 삭제 서비스");
 		aptMapper.deleteInterest(aptCode);
 	}
+	@Override
+	public List<Apt> listInterestInfo(String userId) throws SQLException {
+		return aptMapper.listInterestInfo(userId);
+	}
 
 }
