@@ -46,6 +46,16 @@
 		where aptCode = #{aptCode}
 	</delete>
 
+	<select id="selectPriceAvg" parameterType="string"
+		resultType="map">
+		SELECT dealyear, avg(replace(dealAmount, ',', '')) avg
+		FROM live.housedeal
+		where aptCode= #{aptCode}
+		group by dealyear;
+
+	</select>
+
+
 
 
 </mapper>

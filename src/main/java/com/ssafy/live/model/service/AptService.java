@@ -12,12 +12,19 @@ public interface AptService {
 	List<Apt> listInterestInfo(String userId) throws SQLException;
 	// 아파트 상세매매 정보 조회
 	List<Apt> listDetailApt(Map<String, String> map) throws SQLException;
+
 	// 아파트 매매 정보 조회
 	List<Apt> listApt(Map<String, String> map) throws SQLException;
+
 	// 관심매물 등록
 	void registerInterest(String userId, String aptCode) throws SQLException;
+
 	// 관심매물 확인
 	List<Interest> viewInterest(String userId) throws SQLException;
+
 	// 관심매물 삭제
-	void deleteInterest(String aptCode) throws SQLException; 
+	void deleteInterest(String aptCode) throws SQLException;
+
+	// 평균가 조회
+	List<Map<String, Object>> selectPriceAvg(String aptCode) throws SQLException;
 }
