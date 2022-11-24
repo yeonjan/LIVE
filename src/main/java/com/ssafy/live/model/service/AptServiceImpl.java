@@ -19,12 +19,13 @@ public class AptServiceImpl implements AptService {
 
 	@Autowired
 	private AptMapper aptMapper;
-	
+
 	@Override
 	public List<Apt> listDetailApt(Map<String, String> map) throws SQLException {
 		log.debug(map.toString());
 		return aptMapper.listDetailApt(map);
 	}
+
 	@Override
 	public List<Apt> listApt(Map<String, String> map) throws SQLException {
 		log.debug(map.toString());
@@ -47,6 +48,11 @@ public class AptServiceImpl implements AptService {
 	public void deleteInterest(String aptCode) throws SQLException {
 		log.debug("관심 매물 삭제 서비스");
 		aptMapper.deleteInterest(aptCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectPriceAvg(String aptCode) throws SQLException {
+		return aptMapper.selectPriceAvg(aptCode);
 	}
 
 }
