@@ -12,11 +12,14 @@
 		#{regcode}
 	</select>
 
-	<select id="listInterestInfo" parameterType="map" resultType="apt">
+	<select id="listInterestInfo" parameterType="long" resultType="apt">
 		select aptCode, apartmentName, lng, lat
 		from houseinfo
-		where aptCode =
-		#{aptCode}
+		where aptCode in 
+		<foreach item="aptCode" collection="list"
+      			open="(" separator="," close=")">
+        		#{aptCode}
+  		</foreach>
 	</select>
 
 	<select id="listDetailApt" parameterType="map"

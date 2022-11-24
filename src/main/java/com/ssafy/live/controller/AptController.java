@@ -84,12 +84,10 @@ public class AptController {
 	}
 	
 	@PostMapping("/aptInfo")
-	public ResponseEntity<?> interestAptInfo(@RequestBody Map<String, String> map) throws SQLException {
+	public ResponseEntity<?> interestAptInfo(@RequestBody List<Long> aptCode) throws SQLException {
 		log.debug("interestAptInfo 호출 !!!!!");
-		String userId = map.get("userId");
-		log.debug(userId);
-		List<Apt> lists = new ArrayList<Apt>();
-		lists = aptService.listInterestInfo(userId);
+		log.debug("아파트코드 : {}", aptCode);
+		List<Apt> lists = aptService.listInterestInfo(aptCode);
 		Map<String, List<Apt>> data = new HashMap<>();
 		data.put("regcodes", lists);
 		return new ResponseEntity<Map<String, List<Apt>>> (data, HttpStatus.OK);

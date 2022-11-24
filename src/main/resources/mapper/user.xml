@@ -109,6 +109,4 @@
 		where user_id =
 		#{userId}
 	</update>
-
-
 </mapper>

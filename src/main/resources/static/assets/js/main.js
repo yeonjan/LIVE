@@ -271,7 +271,7 @@
   if (urlValue == "true") {
     window.scrollTo({
       left: 0,
-      top: 525,
+      top: 800,
       behavior: "smooth"
     });
   }

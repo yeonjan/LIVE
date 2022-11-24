@@ -50,8 +50,8 @@ public class AptServiceImpl implements AptService {
 		aptMapper.deleteInterest(aptCode);
 	}
 	@Override
-	public List<Apt> listInterestInfo(String userId) throws SQLException {
-		return aptMapper.listInterestInfo(userId);
+	public List<Apt> listInterestInfo(List<Long> aptCode) throws SQLException {
+		return aptMapper.listInterestInfo(aptCode);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.ssafy.live.model.dto.Interest;
 
 public interface AptService {
 	// 관심매물 아파트 정보
-	List<Apt> listInterestInfo(String userId) throws SQLException;
+	List<Apt> listInterestInfo(List<Long> aptCode) throws SQLException;
 	// 아파트 상세매매 정보 조회
 	List<Apt> listDetailApt(Map<String, String> map) throws SQLException;
 
